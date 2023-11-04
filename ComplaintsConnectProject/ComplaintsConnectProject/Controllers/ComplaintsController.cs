@@ -102,6 +102,13 @@ namespace ComplaintsConnect.Controllers
 
             return CompanyInfo;
         }
+        [HttpPost]
+        public string DeleteComplaintById(int complaintId)
+        {
+            var response = _icomplaintsManager.DeleteComplaintById(complaintId);
+
+            return response;
+        }
 
     }
 }
