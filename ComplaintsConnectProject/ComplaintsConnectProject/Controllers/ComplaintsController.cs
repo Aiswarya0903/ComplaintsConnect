@@ -57,5 +57,21 @@ namespace ComplaintsConnect.Controllers
             return result;
         }
 
+        public IActionResult CompalintsAddEdit()
+        {
+            return View();
+        }
+        public async Task<LiveComplaintsModel> GetViewComplaintById(int complaintId)
+        {
+            var complaintInfo = await _icomplaintsManager.GetViewComplaintById(complaintId);
+
+            return complaintInfo;
+        }
+        public ComplaintsInfo GetComplaintById(int complaintId)
+        {
+            var complaintInfo = _icomplaintsManager.GetComplaintById(complaintId);
+            return complaintInfo;
+        }
+
     }
 }
