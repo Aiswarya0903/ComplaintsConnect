@@ -90,6 +90,18 @@ namespace ComplaintsConnect.Controllers
             var result = _icomplaintsManager.GetDetailsByProductCompany(product, company, searchParam, page);
             return result;
         }
+        public List<ProductInfo> GetDistinctProductsList()
+        {
+            var productsList = _icomplaintsManager.GetDistinctProductsList();
+
+            return productsList;
+        }
+        public List<CompanyInfo> GetDistinctCompaniesListForProduct(string productName)
+        {
+            var CompanyInfo = _icomplaintsManager.GetDistinctCompaniesListForProduct(productName);
+
+            return CompanyInfo;
+        }
 
     }
 }
