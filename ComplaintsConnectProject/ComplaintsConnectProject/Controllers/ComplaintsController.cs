@@ -72,6 +72,24 @@ namespace ComplaintsConnect.Controllers
             var complaintInfo = _icomplaintsManager.GetComplaintById(complaintId);
             return complaintInfo;
         }
+        public IActionResult ComplaintDetails(string product = "", string company = "", string searchParam = "", int page = 1)
+        {
+            var result = GetDetailsByProductCompany(product, company, searchParam, page);
+            return View(result);
+        }
+        public string InsertComplaintDetailsAddEdit(string ModelObject)
+        {
+            var dataModel = JsonConvert.DeserializeObject<ComplaintsDataModel>(ModelObject);
+            var result = _icomplaintsManager.InsertComplaintDetailsAddEdit(dataModel);
+            return result;
+        }
+
+        [HttpGet]
+        public ComplaintsInfoData GetDetailsByProductCompany(string product, string company, string searchParam, int page)
+        {
+            var result = _icomplaintsManager.GetDetailsByProductCompany(product, company, searchParam, page);
+            return result;
+        }
 
     }
 }
