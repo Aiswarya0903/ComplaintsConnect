@@ -110,5 +110,13 @@ namespace ComplaintsConnect.Controllers
             return response;
         }
 
+        [HttpGet]
+        public List<ComplaintsGraphData> GetGraphData(string productName, string companyName)
+        {
+            var response = _icomplaintsManager.GetComplaintsGraphData(productName, companyName);
+
+            return response;
+        }
+
     }
 }
