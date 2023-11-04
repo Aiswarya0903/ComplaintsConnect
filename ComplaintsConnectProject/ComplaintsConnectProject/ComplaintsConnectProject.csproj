@@ -20,8 +20,4 @@
     <ProjectReference Include="..\..\Complaints.Data\Complaints.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Complaints\" />
-  </ItemGroup>
-
 </Project>
