@@ -450,7 +450,550 @@
     <script type="text/javascript">
 
     </script>
-   
+
+    <script>
+
+        var buttonType = '';
+        var productName = "";
+        var companyName = "";
+        $(document).ready(function () {
+            $(".validationMessage").hide();
+
+            $('#OtherDiv').hide();
+            $('#OtherCompanyDiv').hide();
+            var urlParams = window.location.href;
+
+            var queryString = urlParams.split('?')[1];
+
+            if (queryString != undefined) {
+                var params = {};
+                queryString.split('&').forEach(function (param) {
+                    var keyValue = param.split('=');
+                    params[keyValue[0]] = decodeURIComponent(keyValue[1]);
+                });
+
+                var product = params.product;
+                productName = product;
+                var company = params.company;
+                companyName = company;
+            }
+
+
+            $('.errorMsg').hide();
+            //get the type of action of page
+            $('.deleteIcon').hide();
+            var buttonName = localStorage.getItem("action");
+
+            buttonType = buttonName;
+            if (buttonName == 'DSave') {
+                buttonName = "Save"
+            }
+            else if (buttonName == 'View') {
+                buttonName = 'Edit'
+                $('.disabledField').prop("disabled", true);
+                $('.disabledFieldddl').prop("disabled", true)
+                $('.deleteIcon').show();
+            }
+            else if (buttonName == 'Edit') {
+                $('.disabledFieldddl').prop("disabled", true)
+                buttonName = 'Update'
+            }
+
+            $('#spnnAction').html(buttonName);
+
+            // Function to load dropdown options via AJAX
+            function loadProductOptions() {
+                $.ajax({
+                    url: '/Complaints/GetDistinctProductsList',
+                    method: 'GET',
+                    async: true,
+                    success: function (data) {
+                        // Assuming the API returns an array of objects with 'text' properties
+                        var dropdown = $("#productDropdown");
+
+                        // Clear existing options
+                        dropdown.empty();
+
+                        // Add a default "Select an option" option
+                        dropdown.append($("<option></option>").attr("value", "").text("Select an option"));
+
+                        // Iterate through the API response and add options to the dropdown
+                        $.each(data, function (index, item) {
+                            dropdown.append($("<option></option>").attr("value", item.productName).text(item.productName));
+                        });
+
+                    },
+                    error: function () {
+                        console.log("Error loading dropdown options");
+                    }
+                });
+            }
+
+            // Load the dropdown options on page load
+            loadProductOptions();
+
+            // Handle change event for the dynamic dropdown
+            $("#productDropdown").change(function () {
+                var selectedOption = $(this).val();
+                if (selectedOption) {
+                    if (selectedOption == "Other financial service") {
+                        $('#OtherDiv').show();
+                    }
+                    else {
+                        $('#OtherDiv').hide();
+                    }
+
+                    loadCompanyOptions(selectedOption);
+                }
+            });
+
+
+            getEditDetailsById();
+        });
+
+        function dateConvertion(date) {
+            // Create a JavaScript Date object with the provided date and time
+            var dateTime = new Date(date);
+
+            // Format the date and time as required for the input element
+            var formattedDateTime = dateTime.toISOString().slice(0, 16);
+
+            // Set the value of the input element
+            return (formattedDateTime);
+        }
+
+        function getEditDetailsById() {
+
+            var urlParams = window.location.href;
+
+            var queryString = urlParams.split('?')[1];
+
+
+            var params = {};
+            queryString.split('&').forEach(function (param) {
+                var keyValue = param.split('=');
+                params[keyValue[0]] = decodeURIComponent(keyValue[1]);
+            });
+
+            var compalintId = params.complaintId;
+
+
+            var type = params.type;
+
+
+            if (type == "View") {
+                $.ajax({
+                    type: 'Get',
+                    url: '/Complaints/GetViewComplaintById?complaintId=' + compalintId + '',
+                    async: true,
+                    success: function (data) {
+                        if (data != null) {
+                            loadCompanyOptions(data.product);
+                            $('#state option').map(function () {
+                                if ($(this).text() == data.state) return this;
+                            }).attr('selected', 'selected');
+                            //$('#state').val(data.state);
+
+
+                            //$('#companyDropdown').val((data.companyId) != null ? (data.companyId) : "");
+                            $('#zipCode').val(data.zip_code);
+                            $('#dateReceived').val(dateConvertion(data.date_received));
+                            $('#dateSentToCompany').val(dateConvertion(data.date_sent_to_company));
+                            $('#complaintWhatHappened').val(data.complaint_what_happened);
+                            $('#tags').val(data.tags);
+                            $('#hasNarrative').prop('checked', data.has_narrative);
+                            $('#consumerDisputed').val(data.consumer_disputed);
+                            $('#subProduct').val(data.sub_product);
+                            $('#consumerConsentProvided').val(data.consumer_consent_provided);
+                            $('#timely').val(data.timely);
+                            $('#subIssue').val(data.sub_issue);
+                            $('#issue').val(data.issue);
+                            $('#companyResponse').val(data.company_response != null ? data.company_response : "");
+                            $('#submittedVia').val(data.submitted_via != null ? data.submitted_via : "");
+                            $('#hiddenCompalintId').val(data.complaint_id);
+                            setTimeout(function () {
+                                $('#productDropdown').val(data.product != null ? data.product : "");
+                            }, 1000);
+
+
+
+                        }
+                        else {
+                            $.ajax({
+                                type: 'Get',
+                                url: '/Complaints/GetComplaintById?complaintId=' + compalintId + '',
+                                async: true,
+                                success: function (data) {
+                                    if (data != null) {
+                                        loadCompanyOptions(data.productName, (data.companyId) != null ? (data.companyId) : "");
+                                        $('#state').val(data.stateId);
+
+                                        $('#companyDropdown').val((data.companyId) != null ? (data.companyId) : "");
+                                        $('#zipCode').val(data.zipCode);
+                                        $('#dateReceived').val(data.dateReceived);
+                                        $('#dateSentToCompany').val(data.dateSentToCompany);
+                                        $('#complaintWhatHappened').val(data.complaintWhatHappened);
+                                        $('#tags').val(data.tags);
+                                        $('#hasNarrative').prop('checked', data.hasNarrative);
+                                        $('#consumerDisputed').val(data.consumerDisputed);
+                                        $('#subProduct').val(data.subProduct);
+                                        $('#consumerConsentProvided').val(data.consumerConsent);
+                                        $('#timely').val(data.timely);
+                                        $('#subIssue').val(data.subIssue);
+                                        $('#issue').val(data.issue);
+                                        $('#companyResponse').val(data.companyResponse != null ? data.companyResponse : "");
+                                        $('#submittedVia').val(data.submittedvia != null ? data.submittedvia : "");
+                                        $('#hiddenCompalintId').val(data.complaintId);
+                                        setTimeout(function () {
+                                            $('#productDropdown').val(data.productName != null ? data.productName : "");
+                                        }, 1000);
+                                    }
+
+                                },
+                                failure: function (response) {
+
+                                    alert('Failed.');
+                                },
+                                error: function (error) {
+                                    // Handle any errors that occur during the request
+                                    console.log(error);
+                                }
+                            });
+                        }
+
+                    },
+                    failure: function (response) {
+
+                        alert('Failed.');
+                    },
+                    error: function (error) {
+                        // Handle any errors that occur during the request
+                        console.log(error);
+                    }
+                });
+
+            }
+            else {
+                $.ajax({
+                    type: 'Get',
+                    url: '/Complaints/GetComplaintById?complaintId=' + compalintId + '',
+                    async: true,
+                    success: function (data) {
+                        if (data != null) {
+                            loadCompanyOptions(data.productName, (data.companyId) != null ? (data.companyId) : "");
+                            $('#state').val(data.stateId);
+
+                            $('#companyDropdown').val((data.companyId) != null ? (data.companyId) : "");
+                            $('#zipCode').val(data.zipCode);
+                            $('#dateReceived').val(data.dateReceived);
+                            $('#dateSentToCompany').val(data.dateSentToCompany);
+                            $('#complaintWhatHappened').val(data.complaintWhatHappened);
+                            $('#tags').val(data.tags);
+                            $('#hasNarrative').prop('checked', data.hasNarrative);
+                            $('#consumerDisputed').val(data.consumerDisputed);
+                            $('#subProduct').val(data.subProduct);
+                            $('#consumerConsentProvided').val(data.consumerConsent);
+                            $('#timely').val(data.timely);
+                            $('#subIssue').val(data.subIssue);
+                            $('#issue').val(data.issue);
+                            $('#companyResponse').val(data.companyResponse != null ? data.companyResponse : "");
+                            $('#submittedVia').val(data.submittedvia != null ? data.submittedvia : "");
+                            $('#hiddenCompalintId').val(data.complaintId);
+                            setTimeout(function () {
+                                $('#productDropdown').val(data.productName != null ? data.productName : "");
+                            }, 1000);
+                        }
+
+                    },
+                    failure: function (response) {
+
+                        alert('Failed.');
+                    },
+                    error: function (error) {
+                        // Handle any errors that occur during the request
+                        console.log(error);
+                    }
+                });
+            }
+
+        }
+        $("#companyDropdown").change(function () {
+            var selectedOption = $(this).val();
+            if (selectedOption) {
+                if (selectedOption == "0") {
+                    $('#OtherCompanyDiv').show();
+                }
+                else {
+                    $('#OtherCompanyDiv').hide();
+                }
+
+            }
+        });
+
+        // Function to load dropdown options via AJAX
+        async function loadCompanyOptions(productName, selectedCompanyId) {
+            await $.ajax({
+                url: '/Complaints/GetDistinctCompaniesListForProduct?productName=' + productName + '',
+                method: 'GET',
+                async: false,
+                success: function (data) {
+                    // Assuming the API returns an array of objects with 'text' properties
+                    var dropdown = $("#companyDropdown");
+
+                    // Clear existing options
+                    dropdown.empty();
+
+                    // Add a default "Select an option" option
+                    dropdown.append($("<option></option>").attr("value", "").text("Select an option"));
+
+                    // Iterate through the API response and add options to the dropdown
+                    $.each(data, function (index, item) {
+                        dropdown.append($("<option></option>").attr("value", item.companyId).text(item.companyName));
+                    });
+                    dropdown.append($("<option></option>").attr("value", "0").text("Other"));
+                    if (selectedCompanyId != null && selectedCompanyId != 0 && selectedCompanyId != undefined) {
+                        $('#companyDropdown').val((selectedCompanyId) != null ? (selectedCompanyId) : "");
+                    }
+                    else {
+                        dropdown.find('option:contains("' + companyName + '")').prop('selected', true);
+                    }
+
+
+
+                },
+                error: function () {
+                    console.log("Error loading dropdown options");
+                }
+            });
+        }
+
+        function ValidateConsumerData() {
+            var count = 0;
+            if ($("#productDropdown").val() == "") {
+                $("#errorProduct").show();
+                count++;
+
+            }
+            else {
+                $("#errorProduct").hide();
+            }
+            if ($("#issue").val() == "") {
+                $("#errorissue").show();
+                count++;
+
+            }
+            else {
+                $("#errorissue").hide();
+            }
+            if ($("#dateReceived").val() == "") {
+                $("#errorDateReceived").show();
+                count++;
+
+            }
+            else {
+                $("#errorDateReceived").hide();
+            }
+            if ($("#companyDropdown").val() == "") {
+                $("#errorcompany").show();
+                count++;
+
+            }
+            else {
+                $("#errorcompany").hide();
+            }
+            if ($("#dateSentToCompany").val() == "") {
+                $("#errordateSentToCompany").show();
+                count++;
+
+            }
+            else {
+                $("#errordateSentToCompany").hide();
+            }
+            if ($('#state').val() == "" || $('#state').val() == null) {
+                $("#errorstate").show();
+                count++;
+
+            }
+            else {
+                $("#errorstate").hide();
+            }
+            if ($("#zipCode").val() == "") {
+                $("#errorzipCode").show();
+                count++;
+
+            }
+            else {
+                $("#errorzipCode").hide();
+            }
+            return count;
+        }
+        function InsertComplaintsAddEdit() {
+
+
+            var buttonName = localStorage.getItem("action");
+            if (buttonName == "View") {
+                localStorage.setItem("action", "Update");
+                $('.disabledField').prop("disabled", false);
+                $('.disabledFieldddl').prop("disabled", true);
+                //window.location.reload();
+                var field = localStorage.getItem("action");
+                $('#spnnAction').html(field);
+            }
+            else if (buttonName == "Update" || buttonName == "DSave" || buttonName == "Edit") {
+                if (buttonName == "DSave") {
+                    $('.disabledFieldddl').prop("disabled", false)
+                }
+
+                var validate = ValidateConsumerData();
+                if (validate == 0) {
+
+
+                    //Other financial service
+                    var productValue = "";
+                    var companyValue = "";
+                    if ($('#productDropdown').val() == 'Other financial service') {
+                        productValue = $('#Otherproduct').val();
+                    }
+                    else {
+                        productValue = $('#productDropdown').val();
+                    }
+
+                    if ($('#companyDropdown').val() == '0') {
+                        companyValue = $('#Othercompany').val();
+                    }
+                    else {
+                        companyValue = $('#companyDropdown').val();
+                    }
+
+                    var product = {
+                        ProductName: productValue
+                    }
+                    var company = {
+                        CompanyName: companyValue,
+                        CompanyId: $('#companyDropdown').val()
+                    }
+                    var states = {
+                        StateName: $('#state').val()
+                    }
+
+
+                    var complaintsData = {
+                        ZipCode: $('#zipCode').val(),
+                        DateReceived: $('#dateReceived').val(),
+                        DateSentToCompany: $('#dateSentToCompany').val(),
+                        ComplaintWhatHappened: $('#complaintWhatHappened').val(),
+                        Tags: $('#tags').val(),
+                        HasNarrative: $('#hasNarrative').prop('checked') == true ? 1 : 0,
+                        ConsumerDisputed: $('#consumerDisputed').val(),
+                        SubProduct: $('#subProduct').val(),
+                        ConsumerConsent: $('#consumerConsentProvided').val(),
+                        Timely: $('#timely').val(),
+                        SubIssue: $('#subIssue').val(),
+                        Issue: $('#issue').val(),
+                        CompanyResponse: $('#companyResponse').val(),
+                        Submittedvia: $('#submittedVia').val(),
+                        ComplaintId: $('#hiddenCompalintId').val() != "" ? parseInt($('#hiddenCompalintId').val()) : 0
+                    }
+
+                    var compalintsModel1 = {
+                        Product: product,
+                        Company: company,
+                        State: states,
+                        Complaint: complaintsData
+                    };
+
+                    $.ajax({
+                        type: 'POST',
+                        // url: '/Complaints/InsertComplaintDetailsAddEdit',
+                        url: '@Url.Action("InsertComplaintDetailsAddEdit", "Complaints")',
+                        async: true,
+                        data: { ModelObject: JSON.stringify({ "ModelObject": compalintsModel1 }) },
+                        success: function (data) {
+                            if (data == "Compalint Update Successfully.") {
+                                showToast(data);
+                                // Navigate to another HTML page after a delay (e.g., 1 seconds)
+                                setTimeout(function () {
+                                    window.location.href = '/Complaints/ComplaintDetails?product=' + productName + '&company=' + companyName + ''; // Replace 'another-page.html' with your target page
+                                }, 1000);
+                            }
+                            else {
+                                showToast(data);
+                                // Navigate to another HTML page after a delay (e.g., 1 seconds)
+                                setTimeout(function () {
+                                    window.location.href = '/Complaints/Complaints'
+                                }, 1000);
+                            }
+
+
+                        },
+                        failure: function (response) {
+
+                            alert('Failed.');
+                        },
+                        error: function (error) {
+                            // Handle any errors that occur during the request
+                            console.log(error);
+                        }
+                    });
+                }
+
+            }
+
+
+        }
+
+        var complaintIdToDelete;
+        function DeleteComplaint() {
+            var urlParams = window.location.href;
+            var compalintId = urlParams.split('=')[1];
+            complaintIdToDelete = compalintId;
+        }
+
+        function DeleteComplaintById() {
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteComplaintById", "Complaints")',
+                async: true,
+                data: { complaintId: complaintIdToDelete },
+                success: function (response) {
+
+                    showToast("Deleted successfully");
+                    // Navigate to another HTML page after a delay (e.g., 2 seconds)
+                    setTimeout(function () {
+                        window.location.href = '/Complaints/ComplaintDetails?product=' + productName + '&company=' + companyName + ''; // Replace 'another-page.html' with your target page
+                    }, 1000);
+                },
+                failure: function (response) {
+
+                    showToast("Failed to Delete, Please try again later.");
+                },
+                error: function (error) {
+                    // Handle any errors that occur during the request
+                    console.log(error);
+                }
+            });
+        }
+
+        // Function to show a Bootstrap toast
+        function showToast(message) {
+            var toastContainer = document.getElementById('toastContainer');
+            var toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = '<div class="toast-header">Success</div><div class="toast-body">' + message + '</div>';
+            toastContainer.appendChild(toast);
+
+            var bsToast = new bootstrap.Toast(toast);
+            bsToast.show();
+            // Automatically close the toast after 1 seconds (1000 milliseconds)
+            setTimeout(function () {
+                bsToast.hide();
+            }, 1000);
+        }
+
+
+
+    </script>
 
 </body>
 
