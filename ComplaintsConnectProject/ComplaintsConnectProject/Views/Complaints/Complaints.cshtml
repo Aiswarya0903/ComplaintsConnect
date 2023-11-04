@@ -1,0 +1,287 @@
+﻿@using Complaints.Models;
+@using System.Web;
+@model ComplaintModelData
+@{
+    int pageSize = 10;
+    int currentPage = Model.CurrentPage; // Replace with your actual current page
+    int totalPages = Model.TotalPages;
+    ViewData["Title"] = "Complaints";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Bootstrap Css -->
+    <link rel="stylesheet" type="text/css" href="~/css/bootstrap.min.css" />
+    <!-- Custom Css -->
+    <link rel="stylesheet" type="text/css" href="~/css/main.css" />
+    <title>Assignment - 3</title>
+</head>
+
+<body>
+    <!-- Navigation Starts Here -->
+    <div class="commonNavbar">
+        <nav class="navbar navbar-fixed-top navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand commonLogo" href="/Complaints/Home">
+                    <img src="~/img/usf-logo-png-2.png" class="commonImage" alt="Header Logo" />
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a href="/Complaints/Home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/Complaints/AboutUs">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/Complaints/Complaints">Complaints</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- Navigation Ends Here -->
+    <!-- Body Sectiion starts Here -->
+    <div class="mainPage my-5">
+
+        <!-- Complaints Section Starts Here -->
+        <section class="complaints">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <!-- Complaints Tables Starts Here -->
+                        <div class="commonComplaintTable">
+                            <div class="commonCardHeader mb-2">
+                                <div class="row">
+                                    <div class="col-12 col-md-6 col-lg-6">
+                                        <h4>Complaints</h4>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 text-end">
+                                        <button onclick="actionType('DSave')" type="button" class="btn-primary headerResponsiveBtn">
+                                            <a>Raise a complaint</a>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="tableSearch">
+                                        <div class="row">
+                                            <div class="col-12 col-md-8 col-lg-8">
+                                            </div>
+                                            <div class="col-12 col-md-4 col-lg-4 p-0">
+                                                <div class="form-group has-search">
+                                                    <button class="btn" onclick="SearchParams()">
+                                                        <img src="~/img/searchInput.png" alt="search Input" />
+                                                    </button>
+                                                    <input type="text" class="form-control" id="searchparamsId" placeholder="Complaint Id, Company Name,Product Name">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table id="commonDataTable" class="table commonDataTable w-100">
+                                        <thead>
+                                            <tr>
+                                                <th>Company Name</th>
+                                                <th>Product</th>
+                                                <th>No of Complaints</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.ComplaintModelsData.ToList())
+                                            {
+
+                                                <tr>
+                                                    <td data-label="Company Name">@item.CompanyName</td>
+                                                    <td data-label="Product">@item.ProductName</td>
+                                                    <td data-label="No of Complaints">@item.NoOfComplaints</td>
+                                                    <td data-label="Action">
+                                                        <button type="button" onclick="ViewComplaints('@item.ProductName','@item.CompanyName')" class="btn">
+                                                            <a><img src="~/img/eye.png" /></a>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            }
+
+
+
+
+
+                                        </tbody>
+                                    </table>
+                                    <div class="tableFooter">
+                                        <div class="row">
+
+                                            <div class="col-12 col-md-10 col-lg-10 p-0">
+                                                <!-- Bootstrap pagination -->
+                                                <nav aria-label="Page navigation example">
+                                                    @* <ul class="pagination justify-content-end">
+                                                    <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                                                    <a class="page-link" onclick="paginations('1')">Previous</a>
+                                                    </li>
+
+                                                    @for (int i = 1; i <= totalPages; i++)
+                                                    {
+                                                    <li class="page-item @(i == currentPage ? "active" : "")">
+                                                    <a class="page-link" onclick="paginations('@i')">@i</a>
+                                                    </li>
+
+                                                    }
+
+                                                    <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                                                    <a class="page-link" onclick="paginations('@totalPages')">Next</a>
+                                                    </li>
+                                                    </ul> *@
+                                                    <ul class="pagination justify-content-end">
+                                                        <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                                                            <a class="page-link" onclick="paginations('1')">First</a>
+                                                        </li>
+                                                        @* Sarath *@
+                                                        @{
+                                                            var f = 1; var l = @totalPages - 2;
+                                                        }
+                                                        @for (int i = currentPage + 1; i < totalPages - 1 && (f <= 3); i++)
+                                                        {
+                                                            <li class="page-item @(i == currentPage ? "active" : "")">
+                                                                <a class="page-link" onclick="paginations('@i')">@i</a>
+                                                            </li>
+                                                            f++;
+                                                            l++;
+                                                        }
+
+                                                        <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                                                            <a class="page-link" onclick="paginations('@totalPages')">Last</a>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Complaints Tables Ends Here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Complaints Section Ends Here -->
+
+    </div>
+    <!-- Body Sectiion Ends Here -->
+    <!-- Footer Section Starts Here -->
+    <footer class="commonFooter">
+        <div class="footerTop">
+            <div class="row">
+                <div class="col-12 col-md-4 col-lg-6">
+                    <div class="commonLogo">
+                        <a href="index.html">
+                            <img src="~/img/usf-logo-png-2.png" class="commonImage" alt="Footer Logo" />
+                        </a>
+                    </div>
+                </div>
+                <div class="col-12 col-md-8 col-lg-6">
+                    <ul class="p-0 m-0 floatR footerUL">
+                        <li class="foterListItem">
+                            <a href="aboutUs.html">About Us</a>
+                        </li>
+                        <li class="foterListItem">
+                            <a href="#">Privacy Policy</a>
+                        </li>
+                        <li class="foterListItem">
+                            <a href="#">FAQ's</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footerBottom">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12">
+                    <p class="text-center copyRight">&copy; 2023 Complaint Connect All Rights Reserved</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section Ends Here -->
+    <!--JS links-->
+    <!--Jquey-->
+    <script type="text/javascript" src="~/js/jqery.min.js"></script>
+
+    <!-- Bootstrap.min Js-->
+    <script type="text/javascript" src="~/js/bootstrap.min.js"></script>
+    <!-- Custome Js-->
+    <script type="text/javascript" src="~/js/main.js"></script>
+    <script type="text/javascript">
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            // Sample data, replace this with your actual data
+            var urlParams = window.location.href;
+            // Create a URLSearchParams object from the URL
+            var queryString = urlParams.split('?')[1];
+
+            // Parse the query string into key-value pairs
+            var params = {};
+            queryString.split('&').forEach(function (param) {
+                var keyValue = param.split('=');
+                params[keyValue[0]] = decodeURIComponent(keyValue[1]);
+            });
+
+            // Get the value of the "searchParams" query parameter
+            var searchParam = params.searchParams;
+
+            $('#searchparamsId').val(searchParam);
+        });
+
+        $("#searchparamsId").on("keypress", function (event) {
+            // Check if the pressed key is "Enter" (key code 13)
+            if (event.which === 13) {
+                // Prevent the default form submission behavior
+                event.preventDefault();
+
+                // Trigger the form submission
+                SearchParams();
+            }
+        });
+
+        function paginations(currentPage) {
+            window.location.href = '/Complaints/Complaints?page=' + currentPage;
+
+        }
+        function SearchParams() {
+            var searchParams=$('#searchparamsId').val();
+            window.location.href = '/Complaints/Complaints?searchParams=' + searchParams;
+
+
+        }
+        function ViewComplaints(product, company) {
+            window.location.href = '/Complaints/ComplaintDetails?product=' + product + '&company=' + company + '';
+        }
+        //raise a complaints fucntion
+        function actionType(type) {
+
+            //add the action type here based on that type of page will decided.
+            localStorage.setItem("action", type);
+            //navigation to complaint page.
+            window.location.href = '/Complaints/CompalintsAddEdit';
+        }
+    </script>
+</body>
+
+</html>
+
+
