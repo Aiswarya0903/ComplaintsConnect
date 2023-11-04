@@ -1,0 +1,536 @@
+html, body
+{
+    height: 100%;
+}
+body
+{
+    position:relative;
+}
+.commonImage 
+{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.commonLogo
+{
+    width: 190px;
+}
+.commonSectionSpacing
+{
+    padding: 32px 0;
+}
+.commonTextListing li 
+{
+    list-style-type: disclosure-closed;
+    padding-bottom: 18px;
+    font-size: 16px;
+}
+.commonSectionTitle 
+{
+    padding-left: 12px;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+.borderTitle
+{
+    border-bottom: 1px solid #cccccc;
+    padding-bottom: 12px;
+}
+.commonContentVerticalCenter
+{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.cardTitle 
+{
+    font-size: 16px;
+    font-weight: 700;
+    padding-bottom: 12px;
+}
+.cardDescription 
+{
+    font-size: 14px;
+    font-weight: 400;
+    color: #212121;
+}
+.subCardTitle
+{
+    font-size: 18px;
+    font-weight: 600;
+    border-bottom: 1px solid #eeeeee;
+    padding-bottom: 8px;
+    margin: 12px 0px;
+}
+.row 
+{
+    margin-left: 0px;
+    margin-right: 0px;
+}
+.btn-primary 
+{
+    background-color: #0d6efd;
+    border: 0px;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 4px 24px;
+    border-radius: 4px;
+}
+.btn-primary a 
+{
+    color: #ffffff;
+    text-decoration: none;
+}
+.lh-42
+{
+    line-height: 42px;
+}
+.grayBtn,
+.grayBtn a
+{
+    color: #757575;
+}
+.width24
+{
+    width:24px;
+}
+.floatR
+{
+    float: right;
+}
+/*Carousel Css Starts Here*/
+.heroSlider .carousel-caption
+{
+    top: 38%;
+    left: 10%;
+    text-align: left;
+}
+.heroSlider .carousel-item 
+{
+    height: 520px;
+}
+.heroSlider .carousel-caption h1
+{
+    font-size: 28px;
+    font-weight: 700;
+}
+.heroSlider .carousel-caption p
+{
+    font-size: 18px;
+    font-weight: 500;
+    color: #f1f1f1;
+}
+/*Carousel Css Ends Here*/
+/*Navbar Css Starts Here*/
+.commonNavbar
+{
+    background-color:#ebebeb;
+}
+.commonNavbar .navbar-collapse 
+{
+    flex-grow: 0;
+}
+.commonNavbar li.nav-item
+{
+    padding: 0px 18px;
+}
+.commonNavbar li.nav-item a 
+{
+    color: #212121;
+    font-weight: 500;
+    text-decoration: none;
+}
+/*Navbar Css Ends Here*/
+/*Home Page Css Starts Here*/
+.keyFeatures .card
+{
+    margin-bottom: 24px;
+    border: 1px solid #eeeeee;
+    padding: 24px;
+    height: auto;
+    min-height: 280px;
+}    
+.keyFeatures .card:hover
+{
+    -webkit-box-shadow: 0px 3px 12px 0px rgb(121 112 112 / 17%);
+    -moz-box-shadow: 0px 3px 12px 0px rgb(121 112 112 / 17%);
+    box-shadow: 0px 3px 12px 0px rgb(121 112 112 / 17%);
+    background-color: #3498db0d;
+} 
+.keyFeatures .cardIcon
+{
+    font-size: 23px;
+    color: #cbcbcb;
+    border: 1px solid #cbcbcb;
+    padding: 16px;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 16px;
+}
+/*Home Page Css Ends Here*/
+/*About Team Css Starts Here*/
+.teamMemberInfo .cardImage 
+{
+    height: 250px;
+    margin-bottom: 16px;
+}
+.teamMemberInfo .cardImage img
+{
+    border-radius: 12px;
+}
+.teamMemberInfo .cardDescription
+{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 8;
+    -webkit-box-orient: vertical;
+}
+.profilePhoto
+{
+    width: 120px;
+    height: 120px;
+    margin-bottom: 16px;
+}
+
+.validationMessage {
+    color: #f00;
+    font-size: 12px;
+}
+
+.requiredField {
+    color: #f00;
+    padding-left: 3px;
+}
+
+.profilePhoto img
+{
+    border-radius: 50%;
+}
+.githubLinkBox
+{
+    background-color: #f4f4f4;
+    padding: 24px;
+    border-radius: 8px;
+    text-align: center;
+}
+.githubLink .card
+{
+    padding: 16px;
+    margin-bottom: 24px;
+}
+.githubLink .card img
+{
+    border-radius: 12px;
+}
+.githubLink .card-title
+{
+    font-size: 24px;
+    font-weight: 500;
+}
+.githubLinkBox a
+{
+    word-break: break-word;
+}
+.erFlow .commonImage
+{
+    width: 80%;
+}
+.technicalLogo
+{
+    width:60px;
+}
+.technicalTitle 
+{
+    font-size: 20px;
+    margin-top: 16px;
+    font-weight: 600;
+}
+/*About Team Css Ends Here*/
+/*Footer Css Starts Here*/
+.commonFooter {
+    padding: 16px 24px;
+    background-color: #f4f4f4;
+}
+.copyRight
+{
+    font-size: 13px;
+    color: #757575;
+    font-weight: 500;
+    margin: 0px;
+    padding: 16px 0px;
+    border-top: 1px solid #dfdfdf;
+}
+.footerTop
+{
+    padding: 16px 0px;
+}
+.foterListItem 
+{
+    float: left;
+    padding-right: 32px;
+    list-style-type: none;
+}
+.foterListItem a 
+{
+    font-size: 16px;
+    text-decoration: none;
+    color: #212121;
+    font-weight: 600;
+}
+/*Footer Css Ends Here*/
+/*Graph Part Css Starts Here*/
+.graphPart .card-body 
+{
+    height: 560px;
+}
+.graphPart .card-body .commonImage
+{
+    object-fit:contain;
+}
+.graphPart .card-body canvas
+{
+    height: 520px !important;
+    width: auto !important;
+    margin: 0 auto;
+}
+/*Graph Part Css Ends Here*/
+/*Form Page Css Starts Here*/
+.formPage
+{
+    max-width:860px;
+    margin:32px auto;
+}
+.commonInput .form-label 
+{
+    font-size: 14px;
+    font-weight: 400;
+    color: #757575;
+    margin-bottom: 4px;
+}
+.commonInput .form-control
+.commonInput .form-select
+{
+    color: #212121;
+    font-weight: 500;
+}
+/*Form Page Css Ends Here*/
+/*Common Card Css Starts Here*/
+.commonCard 
+{
+    border: 1px solid #eeeeee;
+    -webkit-box-shadow: 0px 3px 12px 0px rgb(121 112 112 / 17%);
+    -moz-box-shadow: 0px 3px 12px 0px rgb(121 112 112 / 17%);
+    box-shadow: 0px 3px 12px 0px rgb(121 112 112 / 17%);
+}
+/*Common Card Css Ends Here*/
+/*Table Css Starts Here*/
+#commonDataTable 
+{
+    border: 1px solid #e3e3e3;
+    -webkit-box-shadow: 0px 3px 12px 0px rgb(121 112 112 / 17%);
+    -moz-box-shadow: 0px 3px 12px 0px rgb(121 112 112 / 17%);
+    box-shadow: 0px 3px 12px 0px rgb(121 112 112 / 17%);
+}
+#commonDataTable thead 
+{
+    background-color:#f4f4f4;
+}
+/*Table Css Ends Here*/
+/*Toaster Message Css Starts Here*/
+.commonToaster
+{
+    position: absolute;
+    top: 10px; 
+    right: 10px;
+    z-index: 9;
+}
+.commonToaster .toast-header
+{
+    font-size: 20px;
+    font-weight: 600;
+    color: #ffffff;
+}
+.commonToaster .toast-body
+{
+    font-weight: 600;
+    font-size: 20px;
+    color: #212121;
+    padding: 32px 12px;
+    text-align: center;
+}
+.commonToaster.toasterSucess .toast-header
+{
+    background-color: #1abc9c;
+}
+.commonToaster.toasterDeleted .toast-header
+{
+    background-color: #e74c3c;
+}
+.commonToaster.toasterUpdated .toast-header
+{
+    background-color: #3498db;
+}
+/*Toaster Message Css Ends Here*/
+/*Mobile Responsive Css Starts Here*/
+@media only screen and (max-width: 767px) and (min-width: 280px)
+{
+    .heroSlider .carousel-item
+    {
+        height: 260px;
+    }  
+    .headerResponsiveBtn 
+    {
+        justify-content: start;
+        display: flex;
+        margin: 12px 0px;
+    }
+    .foterListItem 
+    {
+        float: initial;
+        padding: 12px 0px;
+        list-style-type: none;
+    }
+    .footerUL
+    {
+        float: left;
+    }
+}
+/*Mobile Responsive Css Ends Here*/
+/*Tab Mobile Responsive Css Starts Here*/
+@media only screen and (max-width: 820px) and (min-width: 280px)
+{
+    .responsiveHide
+    {
+        display: none;
+    }
+    .teamMemberInfo .card
+    {
+        margin-bottom: 24px;
+    }
+    .commonNavbar li.nav-item 
+    {
+        padding: 12px 0px;
+    }
+}
+/*Tab Mobile Responsive Css Ends Here*/
+/*Responsive Table Css Starts Here*/
+.commonDataTable.table 
+{
+	border: 1px solid #ccc;
+	margin: 0;
+	padding: 0;
+	border-collapse: collapse;
+	border-spacing: 0;
+    border-collapse: collapse;
+	width: 100%;
+}
+.commonDataTable.table tr 
+{
+	border: 1px solid #ddd;
+	padding: 5px;
+}
+.commonDataTable table th,
+.commonDataTable table td 
+{
+	padding: 10px;
+	text-align: left;
+    padding: 8px 16px;
+}
+.commonDataTable
+{
+	overflow: auto;
+	height: 100px;
+}
+.commonDataTable thead th 
+{
+	position: sticky !important;
+	top: 0;
+	z-index: 1;
+}
+.commonDataTable th 
+{
+	background: #eee;
+}
+.actionColumn
+{
+    width: 180px !important;
+}
+.tableFooter
+{
+    margin-top:16px;
+}
+.tableSearch
+{
+    margin-bottom:16px;
+}
+.has-search
+{
+    position:relative;
+}
+.has-search .btn
+{
+    position: absolute;
+    z-index: 2;
+    right: 0px;
+    top: 0px;
+}
+@media only screen and (max-width: 767px) and (min-width: 280px) {
+}
+@media only screen and (max-width: 1024px) and (min-width: 280px)
+{
+	.commonDataTable.table 
+    {
+		border: 0 !important;
+        box-shadow: none !important;
+	}
+	.commonDataTable.table thead 
+    {
+		display: none;
+	}
+	.commonDataTable.table tr 
+    {
+		margin-bottom: 20px;
+		display: block;
+		border-bottom: 1px solid #ddd;
+	}
+	.commonDataTable.table td 
+    {
+		display: block;
+		text-align: right;
+		font-size: 13px;
+		border-bottom: 1px dotted #ccc;
+        font-weight: 600;
+	}
+	.commonDataTable.table td:last-child 
+    {
+		border-bottom: 0;
+	}
+	.commonDataTable.table td:before 
+    {
+        content: attr(data-label);
+        float: left;
+        text-transform: capitalize;
+        font-weight: 400;
+    }
+    .actionColumn
+    {
+        width: auto !important;
+    }
+    .heroSlider .carousel-caption h1 
+    {
+        font-size: 14px;
+    }
+    .heroSlider .carousel-caption p 
+    {
+        font-size: 10px;
+    }
+}
+/*Responsive Table Css Ends Here*/
+
