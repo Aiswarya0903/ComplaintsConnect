@@ -1,5 +1,457 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+    <!-- Bootstrap Css -->
+    <link rel="stylesheet" type="text/css" href="~/css/bootstrap.min.css" />
+    <!-- Custom Css -->
+    <link rel="stylesheet" type="text/css" href="~/css/main.css" />
+    <title>Assignment - 3</title>
+
+</head>
+<body>
+    <input type="text" id="hiddenCompalintId" hidden>
+
+    <!-- Navigation Starts Here -->
+    <div class="commonNavbar">
+        <nav class="navbar navbar-fixed-top navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand commonLogo" href="/Complaints/Home">
+                    <img src="~/img/usf-logo-png-2.png" class="commonImage" alt="Header Logo" />
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a href="/Complaints/Home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/Complaints/AboutUs">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/Complaints/Complaints">Complaints</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- Navigation Ends Here -->
+    <!-- Toaster message div section start -->
+    <div id="toastContainer" class="commonToaster toasterSucess">
+    </div>
+    <!-- Toaster message div section End -->
+    <!-- Delete Modal Popup Starts Here -->
+    <div class="modal fade" id="deleteRecord" tabindex="-1" aria-labelledby="deleteRecord" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Record</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure want delete the record?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" id="deleteComplaints" onclick="DeleteComplaintById()" class="btn btn-primary">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Delete Modal Popup Ends Here -->
+    <!-- Body Sectiion starts Here -->
+    <div class="mainPage my-5">
+
+        <!-- Complaints Add/Edit Section Starts Here -->
+        <section class="complaintsAddEdit">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <!-- Complaints Tables Starts Here -->
+                        <div class="commonComplaintTable">
+                            <div class="commonCardHeader mb-2">
+                                <div class="row">
+                                    <div class="col-12 col-md-6 col-lg-6">
+                                        <h4>Details</h4>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 text-end">
+                                        <button id="btnAction" type="button" onclick="InsertComplaintsAddEdit()" class="btn-primary headerResponsiveBtn" id="complaints">
+                                            <span id="spnnAction">Save</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="commonForm">
+                                <div class="commonCard">
+
+
+                                    <div class="row">
+                                        <div class="col-12 col-md-12 col-lg-12">
+                                            <h6 class="subCardTitle">Product</h6>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="commonInput mb-3">
+                                                <label for="product" class="form-label">Product<span class="requiredField">*</span></label>
+                                                @* <input type="text" class="form-control inputDisabled" id="product"
+                                                placeholder="Product" > *@
+                                                <select id="productDropdown" class="form-select disabledFieldddl">
+                                                    <option value="">Select an option</option>
+                                                </select>
+
+                                                <span id="errorProduct" class="validationMessage">
+                                                    Please enter the
+                                                    product
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4" id="OtherDiv">
+                                            <div class="commonInput mb-3">
+                                                <label for="product" class="form-label">Other</label>
+                                                <input type="text" class="form-control inputDisabled" id="Otherproduct"
+                                                       placeholder="Other Product">
+
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="commonInput mb-3">
+                                                <label class="form-label">Sub Product</label>
+                                                <input type="text" class="form-control inputDisabled disabledField"
+                                                       id="subProduct" placeholder="Sub Product">
+                                                <span id="errorsubProduct" class="validationMessage">
+                                                    Please enter the sub
+                                                    product
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="commonInput mb-3">
+                                                <label for="issue" class="form-label">Issue<span class="requiredField">*</span></label>
+                                                <input type="text" placeholder="Issue" class="form-control inputDisabled disabledField" id="issue">
+                                                <span id="errorissue" class="validationMessage">
+                                                    Please enter the
+                                                    issue
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="commonInput mb-3">
+                                                <label for="subIssue" class="form-label">Sub Issue</label>
+                                                <input type="text" class="form-control inputDisabled disabledField" id="subIssue"
+                                                       placeholder="subIssue">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="commonInput mb-3">
+                                                <label for="timely" class="form-label">Timely</label>
+                                                <input type="text" class="form-control inputDisabled disabledField" id="timely"
+                                                       placeholder="Timely">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="commonInput mb-3">
+                                                <label for="complaintWhatHappened" class="form-label">
+                                                    Complaint What
+                                                    Happened
+                                                </label>
+                                                <input type="text" class="form-control inputDisabled disabledField"
+                                                       id="complaintWhatHappened" placeholder="Complaint What Happened">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="commonInput mb-3">
+                                                <label for="dateReceived" class="form-label">Date Received<span class="requiredField">*</span></label>
+                                                <input type="datetime-local" class="form-control inputDisabled disabledField"
+                                                       id="dateReceived" placeholder="Date Received"
+                                                       value="06/07/2012">
+                                                <span id="errorDateReceived" class="validationMessage">
+                                                    Please enter the
+                                                    Date Received
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-12 col-lg-12">
+                                            <h6 class="subCardTitle">Company</h6>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="commonInput mb-3">
+                                                <label for="company" class="form-label">Company<span class="requiredField">*</span></label>
+                                                @* <input  type="text" class="form-control inputDisabled" id="company"
+                                                placeholder="Company"> *@
+                                                <select id="companyDropdown" class="form-select disabledFieldddl">
+                                                    <option value="">Select an option</option>
+                                                </select>
+                                                <span id="errorcompany" class="validationMessage">
+                                                    Please enter the
+                                                    company
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4" id="OtherCompanyDiv">
+                                            <div class="commonInput mb-3">
+                                                <label for="product" class="form-label">Other</label>
+                                                <input type="text" class="form-control inputDisabled" id="Othercompany"
+                                                       placeholder="Other Company">
+
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="commonInput mb-3">
+                                                <label for="companyResponse" class="form-label">
+                                                    Company
+                                                    Response
+                                                </label>
+                                                <input type="text" class="form-control inputDisabled disabledField"
+                                                       id="companyResponse" placeholder="Company Response">
+                                                <span id="errorcompanyResponse" class="commonColour errorMsg">
+                                                    Please enter
+                                                    the company response
+                                                </span>
+                                            </div>
+                                        </div>
+                                        @* <div class="col-12 col-md-6 col-lg-4">
+                                        <div class="commonInput mb-3">
+                                        <label for="companyStatus" class="form-label">
+                                        Company
+                                        Status
+                                        </label>
+                                        <input type="text" class="form-control inputDisabled disabledField"
+                                        id="companyStatus" placeholder="Company status">
+
+                                        </div>
+                                        </div> *@
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="commonInput mb-3">
+                                                <label for="dateSentToCompany" class="form-label">
+                                                    Date Sent To
+                                                    Company
+                                                    <span class="requiredField">*</span>
+                                                </label>
+                                                <input type="datetime-local" class="form-control inputDisabled disabledField"
+                                                       id="dateSentToCompany" placeholder="Date : Time"
+                                                       value="6/7/2012">
+                                                <span id="errordateSentToCompany" class="validationMessage">
+                                                    Please enter
+                                                    the date sent to company
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="commonInput mb-3">
+                                                <label for="consumerConsentProvided" class="form-label">
+                                                    Consumer
+                                                    Consent Provided
+                                                </label>
+                                                <input type="text" class="form-control inputDisabled disabledField"
+                                                       id="consumerConsentProvided"
+                                                       placeholder="Consumer Consent Provided">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="commonInput mb-3">
+                                                <label for="submittedVia" class="form-label">Submitted Via</label>
+                                                <input type="text" class="form-control inputDisabled disabledField"
+                                                       id="submittedVia" placeholder="Submitted Via">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-12 col-lg-12">
+                                            <h6 class="subCardTitle">Address</h6>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="commonInput mb-3">
+                                                <label for="state" class="form-label">State<span class="requiredField">*</span></label>
+                                                <select class="form-select disabledFieldddl" id="state">
+                                                    <option value="">Open this select menu</option>
+                                                    <option value="1">UT</option>
+                                                    <option value="2">NC</option>
+                                                    <option value="3">WI</option>
+                                                    <option value="4">AS</option>
+                                                    <option value="5">MA</option>
+                                                    <option value="6">MI</option>
+                                                    <option value="7">TN</option>
+                                                    <option value="8">FM</option>
+                                                    <option value="9">NH</option>
+                                                    <option value="10">AK</option>
+                                                    <option value="11">OK</option>
+                                                    <option value="12">KY</option>
+                                                    <option value="13">CO</option>
+                                                    <option value="14">NV</option>
+                                                    <option value="15">SD</option>
+                                                    <option value="16">VI</option>
+                                                    <option value="17">UNITED STATES MINOR OUTLYING ISLANDS</option>
+                                                    <option value="18">PA</option>
+                                                    <option value="19">WV</option>
+                                                    <option value="20">GA</option>
+                                                    <option value="21">RI</option>
+                                                    <option value="22">IN</option>
+                                                    <option value="23">DC</option>
+                                                    <option value="24">MD</option>
+                                                    <option value="25">OR</option>
+                                                    <option value="26">CT</option>
+                                                    <option value="27">AR</option>
+                                                    <option value="28">MN</option>
+                                                    <option value="29">PW</option>
+                                                    <option value="30">AL</option>
+                                                    <option value="31">ID</option>
+                                                    <option value="32">TX</option>
+                                                    <option value="34">AA</option>
+                                                    <option value="35">NM</option>
+                                                    <option value="36">ND</option>
+                                                    <option value="37">ME</option>
+                                                    <option value="38">PR</option>
+                                                    <option value="39">IL</option>
+                                                    <option value="40">MO</option>
+                                                    <option value="41">SC</option>
+                                                    <option value="42">DE</option>
+                                                    <option value="43">GU</option>
+                                                    <option value="44">FL</option>
+                                                    <option value="45">MP</option>
+                                                    <option value="46">CA</option>
+                                                    <option value="47">WY</option>
+                                                    <option value="48">HI</option>
+                                                    <option value="49">AE</option>
+                                                    <option value="50">OH</option>
+                                                    <option value="51">NE</option>
+                                                    <option value="52">MH</option>
+                                                    <option value="53">VT</option>
+                                                    <option value="54">NY</option>
+                                                    <option value="55">MS</option>
+                                                    <option value="56">NJ</option>
+                                                    <option value="57">IA</option>
+                                                    <option value="58">KS</option>
+                                                    <option value="59">LA</option>
+                                                    <option value="60">WA</option>
+                                                    <option value="61">AP</option>
+                                                    <option value="62">AZ</option>
+                                                    <option value="63">VA</option>
+                                                    <option value="64">MT</option>
+                                                </select>
+                                                <span id="errorstate" class="validationMessage">
+                                                    Please enter the
+                                                    state
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="commonInput mb-3">
+                                                <label for="zipCode" class="form-label">Zip Code<span class="requiredField">*</span></label>
+                                                <input type="text" class="form-control inputDisabled disabledField" id="zipCode"
+                                                       placeholder="Zip Code">
+                                                <span id="errorzipCode" class="validationMessage">
+                                                    Please enter the zip
+                                                    code
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="commonInput mb-3">
+                                                <label for="tags" class="form-label">Tags</label>
+                                                <input type="text" class="form-control inputDisabled disabledField" id="tags"
+                                                       placeholder="Tags">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="commonInput mb-3">
+                                                <label for="consumerDisputed" class="form-label">
+                                                    Consumer
+                                                    Disputed
+                                                </label>
+                                                <input type="text" class="form-control inputDisabled disabledField"
+                                                       id="consumerDisputed" placeholder="Consumer Disputed">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="commonInput mt-4">
+                                                <input class="form-check-input disabledField" type="checkbox" value=""
+                                                       id="hasNarrative" checked>
+                                                <label class="form-check-label" for="hasNarrative">
+                                                    Has Narrative
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-6 text-end deleteIcon">
+                                            <!-- <button type="button" class="btn-primary headerResponsiveBtn" id="complaints">
+                                                <a href="complaints.html">Edit</a>
+                                            </button> -->
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-6 text-end deleteIcon">
+                                            <button type="button" class="btn grayBtn" onclick="DeleteComplaint()" data-bs-toggle="modal" data-bs-target="#deleteRecord">
+                                                <img src="~/img/delete.png" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Complaints Tables Ends Here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Complaints Add/Edit Section Ends Here -->
+
+    </div>
+    <!-- Body Sectiion Ends Here -->
+    <!-- Footer Section Starts Here -->
+    <footer class="commonFooter">
+        <div class="footerTop">
+            <div class="row">
+                <div class="col-12 col-md-4 col-lg-6">
+                    <div class="commonLogo">
+                        <a href="index.html">
+                            <img src="~/img/usf-logo-png-2.png" class="commonImage" alt="Footer Logo" />
+                        </a>
+                    </div>
+                </div>
+                <div class="col-12 col-md-8 col-lg-6">
+                    <ul class="p-0 m-0 floatR footerUL">
+                        <li class="foterListItem">
+                            <a href="aboutUs.html">About Us</a>
+                        </li>
+                        <li class="foterListItem">
+                            <a href="#">Privacy Policy</a>
+                        </li>
+                        <li class="foterListItem">
+                            <a href="#">FAQ's</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footerBottom">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12">
+                    <p class="text-center copyRight">&copy; 2023 Complaint Connect All Rights Reserved</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section Ends Here -->
+    <!--JS links-->
+    <!--Jquey-->
+    <script type="text/javascript" src="~/js/jqery.min.js"></script>
+
+    <!-- Bootstrap.min Js-->
+    <script type="text/javascript" src="~/js/bootstrap.min.js"></script>
+    <!-- Custome Js-->
+    <script type="text/javascript" src="/js/main.js"></script>
+    <script type="text/javascript">
+
+    </script>
+   
+
+</body>
+
+</html>
