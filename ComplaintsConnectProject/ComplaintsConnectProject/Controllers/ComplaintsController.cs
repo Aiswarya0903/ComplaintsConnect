@@ -44,6 +44,18 @@ namespace ComplaintsConnect.Controllers
         /// Compalints Page
         /// </summary>
         /// <returns></returns>
-       
+        public IActionResult Complaints(int currentPage = 1, string searchParams = "", int page = 1)
+        {
+            var result = GetComplaintsData(currentPage, searchParams, page);
+            return View("Complaints", result);
+        }
+
+        [HttpGet]
+        public ComplaintModelData GetComplaintsData(int currentPage, string searchParams, int page)
+        {
+            var result = _icomplaintsManager.GetComplaintsData(currentPage, searchParams, page);
+            return result;
+        }
+
     }
 }
