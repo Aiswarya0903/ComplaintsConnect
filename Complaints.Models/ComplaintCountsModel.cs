@@ -16,10 +16,10 @@ namespace Complaints.Models
 
     public class ComplaintCountsModel
     {
-        public int ProductId { get; set; }
-        public int CompanyId { get; set; }
-        public string? ProductName { get; set; }
-        public string? CompanyName { get; set; }
-        public int NoOfComplaints { get; set; }
+       public int ProductId  {get;set;}
+       public int CompanyId {get;set;}
+       public string? ProductName  {get;set;}
+       public string? CompanyName  {get;set;}
+       public int NoOfComplaints { get; set; }
     }
 }
