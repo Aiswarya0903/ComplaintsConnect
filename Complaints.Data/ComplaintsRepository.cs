@@ -178,7 +178,7 @@ namespace Complaints.Data
                     query.DateSentToCompany = modelObject.ModelObject.Complaint.DateSentToCompany;
                     query.ComplaintWhatHappened = modelObject?.ModelObject?.Complaint?.ComplaintWhatHappened;
                     query.Tags = modelObject?.ModelObject?.Complaint?.Tags;
-                    query.HasNarrative = modelObject?.ModelObject?.Complaint?.HasNarrative;
+                    query.HasNarrative = (bool)(modelObject.ModelObject?.Complaint?.HasNarrative);
                     query.SubProduct = modelObject?.ModelObject?.Complaint?.SubProduct;
 
                     _complaintsDbContext.Update(query);
