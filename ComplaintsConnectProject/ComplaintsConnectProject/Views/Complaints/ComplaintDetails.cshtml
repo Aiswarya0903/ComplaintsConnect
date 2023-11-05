@@ -399,7 +399,7 @@
     }
     function viewEditDetails(complaintId, type) {
         localStorage.setItem("action", type);
-        window.location.href = '/Complaints/CompalintsAddEdit?complaintId=' + complaintId + '&type=' + type + '&product=' + productName + '&company=' + companyName + '';
+        window.location.href = '/Complaints/ComplaintsAddEdit?complaintId=' + complaintId + '&type=' + type + '&product=' + productName + '&company=' + companyName + '';
     }
     var complaintIdToDelete;
     function DeleteComplaint(complaintId) {
@@ -437,7 +437,7 @@
         //add the action type here based on that type of page will decided.
         localStorage.setItem("action", type);
         //navigation to complaint page.
-        window.location.href = '/Complaints/CompalintsAddEdit';
+        window.location.href = '/Complaints/ComplaintsAddEdit';
     }
     // Function to show a Bootstrap toast
     function showToast(message) {

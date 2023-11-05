@@ -1,6 +1,4 @@
-﻿
-
-using Complaints.IBusiness;
+﻿using Complaints.IBusiness;
 using Complaints.Models;
 using Complaints.Models.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -49,15 +47,7 @@ namespace ComplaintsConnect.Controllers
             var result = GetComplaintsData(currentPage, searchParams, page);
             return View("Complaints", result);
         }
-
-        [HttpGet]
-        public ComplaintModelData GetComplaintsData(int currentPage, string searchParams, int page)
-        {
-            var result = _icomplaintsManager.GetComplaintsData(currentPage, searchParams, page);
-            return result;
-        }
-
-        public IActionResult CompalintsAddEdit()
+        public IActionResult ComplaintsAddEdit()
         {
             return View();
         }
@@ -83,13 +73,6 @@ namespace ComplaintsConnect.Controllers
             var result = _icomplaintsManager.InsertComplaintDetailsAddEdit(dataModel);
             return result;
         }
-
-        [HttpGet]
-        public ComplaintsInfoData GetDetailsByProductCompany(string product, string company, string searchParam, int page)
-        {
-            var result = _icomplaintsManager.GetDetailsByProductCompany(product, company, searchParam, page);
-            return result;
-        }
         public List<ProductInfo> GetDistinctProductsList()
         {
             var productsList = _icomplaintsManager.GetDistinctProductsList();
@@ -102,6 +85,19 @@ namespace ComplaintsConnect.Controllers
 
             return CompanyInfo;
         }
+
+        [HttpGet]
+        public ComplaintModelData GetComplaintsData(int currentPage, string searchParams, int page)
+        {
+            var result = _icomplaintsManager.GetComplaintsData(currentPage, searchParams, page);
+            return result;
+        }
+        [HttpGet]
+        public ComplaintsInfoData GetDetailsByProductCompany(string product, string company, string searchParam, int page)
+        {
+            var result = _icomplaintsManager.GetDetailsByProductCompany(product, company, searchParam, page);
+            return result;
+        }
         [HttpPost]
         public string DeleteComplaintById(int complaintId)
         {
@@ -109,7 +105,6 @@ namespace ComplaintsConnect.Controllers
 
             return response;
         }
-
         [HttpGet]
         public List<ComplaintsGraphData> GetGraphData(string productName, string companyName)
         {
@@ -117,6 +112,5 @@ namespace ComplaintsConnect.Controllers
 
             return response;
         }
-
     }
 }

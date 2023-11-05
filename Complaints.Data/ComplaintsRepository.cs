@@ -64,7 +64,7 @@ namespace Complaints.Data
                             DateSentToCompany = c.DateSentToCompany,
                             ComplaintWhatHappened = c.ComplaintWhatHappened,
                             Tags = c.Tags,
-                            HasNarrative = c.HasNarrative,
+                            HasNarrative = c.HasNarrative==null||c.HasNarrative==false?false:true,
                             SubProduct = c.SubProduct
                         };
             return query.FirstOrDefault();
