@@ -85,7 +85,7 @@ namespace Complaints.Data
             return query.ToList();
         }
 
-        public string InsertComplaintDetailsAddEdit(ComplaintsDataModel modelObject)
+        public string InsertComplaintDetailsAddEdit(CompalintsDataModel modelObject)
         {
             string message = string.Empty;
             if (modelObject != null && modelObject.ModelObject != null &&
@@ -178,7 +178,7 @@ namespace Complaints.Data
                     query.DateSentToCompany = modelObject.ModelObject.Complaint.DateSentToCompany;
                     query.ComplaintWhatHappened = modelObject?.ModelObject?.Complaint?.ComplaintWhatHappened;
                     query.Tags = modelObject?.ModelObject?.Complaint?.Tags;
-                    query.HasNarrative = (bool)(modelObject.ModelObject?.Complaint?.HasNarrative);
+                    query.HasNarrative = modelObject?.ModelObject?.Complaint?.HasNarrative;
                     query.SubProduct = modelObject?.ModelObject?.Complaint?.SubProduct;
 
                     _complaintsDbContext.Update(query);
