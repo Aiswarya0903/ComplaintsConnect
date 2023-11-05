@@ -3,11 +3,10 @@ using Complaints.Models;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.Design;
 using System.Reflection.Emit;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Complaints.Data
 {
-    public partial class ComplaintsDbContext : DbContext
+    public partial class ComplaintsDbContext: DbContext
     {
         private string _Connstr;
         public ComplaintsDbContext(string Connstr)
@@ -30,12 +29,12 @@ namespace Complaints.Data
             }
         }
 
-        public virtual DbSet<Product> Product { get; set; }
-
-        public virtual DbSet<Company> Company { get; set; }
-
-        public virtual DbSet<Complaint> Complaint { get; set; }
-        public virtual DbSet<State> State { get; set; }
+         public virtual DbSet<Product> Product { get; set; }
+        
+         public virtual DbSet<Company> Company { get; set; }
+         
+         public virtual DbSet<Complaint> Complaint { get; set; }
+         public virtual DbSet<State> State { get; set; }   
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -45,10 +44,10 @@ namespace Complaints.Data
                 entity.Property(e => e.CompanyId);
                 entity.Property(e => e.ProductName)
                     .HasMaxLength(500)
-                .IsUnicode(false);
-
+                    .IsUnicode(false);
+                
             });
-
+            
             modelBuilder.Entity<Company>(entity =>
             {
                 entity.HasKey(e => e.CompanyId);
@@ -107,10 +106,10 @@ namespace Complaints.Data
                     .IsUnicode(false);
                 entity.Property(e => e.HasNarrative)
                     .HasDefaultValue(false);
-
-
+               
+                
             });
-
+            
 
 
         }
