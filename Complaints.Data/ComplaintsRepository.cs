@@ -85,7 +85,7 @@ namespace Complaints.Data
             return query.ToList();
         }
 
-        public string InsertComplaintDetailsAddEdit(CompalintsDataModel modelObject)
+        public string InsertComplaintDetailsAddEdit(ComplaintsDataModel modelObject)
         {
             string message = string.Empty;
             if (modelObject != null && modelObject.ModelObject != null &&
