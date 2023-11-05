@@ -64,7 +64,7 @@ namespace Complaints.Data
                             DateSentToCompany = c.DateSentToCompany,
                             ComplaintWhatHappened = c.ComplaintWhatHappened,
                             Tags = c.Tags,
-                            HasNarrative = c.HasNarrative==null||c.HasNarrative==false?false:true,
+                            HasNarrative = c.HasNarrative!=null?(bool)c.HasNarrative:false,
                             SubProduct = c.SubProduct
                         };
             return query.FirstOrDefault();
@@ -94,8 +94,8 @@ namespace Complaints.Data
             {
                 var company = new Company();
                 var product = new Product();
-
-                if (modelObject.ModelObject.Company.CompanyId <= 0)
+                
+                if (modelObject.ModelObject.Company.CompanyId<=0)
                 {
                     company = new Company
                     {
@@ -107,23 +107,23 @@ namespace Complaints.Data
                     product = new Product
                     {
                         ProductName = modelObject.ModelObject.Product.ProductName,
-                        CompanyId = company.CompanyId
-
+                        CompanyId=company.CompanyId
+                        
                     };
                     _complaintsDbContext.Product.Add(product);
                     _complaintsDbContext.SaveChanges();
                 }
-
-                var query = _complaintsDbContext.Product
-                 .Where(product => product.ProductName == modelObject.ModelObject.Product.ProductName && product.CompanyId == Convert.ToInt32(modelObject.ModelObject.Company.CompanyId == 0 ? company.CompanyId : modelObject.ModelObject.Company.CompanyId))
-                 .Select(product => new
-                 {
-                     product.ProductName,
-                     product.ProductId,
-                     product.CompanyId
-                 })
-                 .SingleOrDefault();
-
+                
+                   var query = _complaintsDbContext.Product
+                    .Where(product => product.ProductName == modelObject.ModelObject.Product.ProductName && product.CompanyId == Convert.ToInt32(modelObject.ModelObject.Company.CompanyId==0? company.CompanyId: modelObject.ModelObject.Company.CompanyId))
+                    .Select(product => new
+                    {
+                        product.ProductName,
+                        product.ProductId,
+                        product.CompanyId
+                    })
+                    .SingleOrDefault();
+                
 
 
 
@@ -165,21 +165,21 @@ namespace Complaints.Data
                 if (query != null)
                 {
 
-                    query.ConsumerDisputed = modelObject.ModelObject.Complaint.ConsumerDisputed;
-                    query.CompanyResponse = modelObject.ModelObject.Complaint.CompanyResponse;
+                    query.ConsumerDisputed = modelObject?.ModelObject?.Complaint?.ConsumerDisputed;
+                    query.CompanyResponse = modelObject?.ModelObject?.Complaint?.CompanyResponse;
                     //query.StateId = modelObject.ModelObject.Complaint.StateId;
-                    query.Submittedvia = modelObject.ModelObject.Complaint.Submittedvia;
-                    query.Issue = modelObject.ModelObject.Complaint.Issue;
-                    query.SubIssue = modelObject.ModelObject.Complaint.SubIssue;
-                    query.Timely = modelObject.ModelObject.Complaint.Timely;
-                    query.ConsumerConsent = modelObject.ModelObject.Complaint.ConsumerConsent;
-                    query.ZipCode = modelObject.ModelObject.Complaint.ZipCode;
+                    query.Submittedvia = modelObject?.ModelObject?.Complaint?.Submittedvia;
+                    query.Issue = modelObject?.ModelObject?.Complaint?.Issue;
+                    query.SubIssue = modelObject?.ModelObject?.Complaint?.SubIssue;
+                    query.Timely = modelObject?.ModelObject?.Complaint?.Timely;
+                    query.ConsumerConsent = modelObject?.ModelObject?.Complaint?.ConsumerConsent;
+                    query.ZipCode = modelObject?.ModelObject?.Complaint?.ZipCode;
                     query.DateReceived = modelObject.ModelObject.Complaint.DateReceived;
                     query.DateSentToCompany = modelObject.ModelObject.Complaint.DateSentToCompany;
-                    query.ComplaintWhatHappened = modelObject.ModelObject.Complaint.ComplaintWhatHappened;
-                    query.Tags = modelObject.ModelObject.Complaint.Tags;
-                    query.HasNarrative = modelObject.ModelObject.Complaint.HasNarrative;
-                    query.SubProduct = modelObject.ModelObject.Complaint.SubProduct;
+                    query.ComplaintWhatHappened = modelObject?.ModelObject?.Complaint?.ComplaintWhatHappened;
+                    query.Tags = modelObject?.ModelObject?.Complaint?.Tags;
+                    query.HasNarrative = modelObject?.ModelObject?.Complaint?.HasNarrative;
+                    query.SubProduct = modelObject?.ModelObject?.Complaint?.SubProduct;
 
                     _complaintsDbContext.Update(query);
                     _complaintsDbContext.SaveChanges();
@@ -238,8 +238,8 @@ namespace Complaints.Data
                          where
                          (
                             string.IsNullOrEmpty(searchParams) ||
-                            complaint.Product.ProductName.Contains(searchParams.Trim()) ||
-                            complaint.Company.CompanyName.Contains(searchParams.Trim()) ||
+                            (complaint.Product.ProductName ?? "").Contains(searchParams.Trim()) ||
+                            (complaint.Company.CompanyName ?? "").Contains(searchParams.Trim()) ||
                             !complaintId.HasValue || complaint.ComplaintId == Convert.ToInt64(complaintId)
                          )
                          group new { product, company } by new { product.ProductId, product.CompanyId } into grouped
@@ -392,10 +392,32 @@ namespace Complaints.Data
             int pageSize = 10; // Number of records per page
             int pageNumber = currentPage; // Page number (1-based index)
 
+            int number;
+            int? complaintId = null;
+
+            if (int.TryParse(searchParam, out number))
+            {
+                searchParam = "12345";
+                complaintId = number;
+            }
+            else
+            {
+                number = 0;
+                complaintId = number;
+            }
+
             var query = (from c in _complaintsDbContext.Complaint
                          join P in _complaintsDbContext.Product on c.ProductId equals P.ProductId
                          join cc in _complaintsDbContext.Company on P.CompanyId equals cc.CompanyId
-                         where P.ProductName == (product ?? "") && cc.CompanyName == (company ?? "")
+                         //where P.ProductName == (product ?? "") && cc.CompanyName == (company ?? "")
+                         where
+                         (
+                          P.ProductName == (product ?? "") && cc.CompanyName == (company ?? "") &&
+                            string.IsNullOrEmpty(searchParam) &&
+                            (c.Product.ProductName ?? "").Contains(searchParam ?? "".Trim()) ||
+                            (c.Company.CompanyName ?? "").Contains(searchParam ?? "".Trim()) &&
+                            !complaintId.HasValue || c.ComplaintId == Convert.ToInt64(complaintId)
+                         )
                          select new ComplaintsInfo
                          {
                              ComplaintId = c.ComplaintId,
@@ -475,7 +497,8 @@ namespace Complaints.Data
                             Year = g.Key,
                             NoOfComplaints = g.Count()
                         };
-
+            _complaintsDbContext.Database.SetCommandTimeout(180);
+            _complaintsDbContext.Database.CloseConnection();
             return query.ToList();
         }
     }
