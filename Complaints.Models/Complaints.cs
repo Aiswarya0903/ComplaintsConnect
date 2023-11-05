@@ -14,11 +14,11 @@ namespace Complaints.Models
     public class Complaint
     {
         [Key]
-        public int ComplaintId { get; set; }
+        public int ComplaintId {  get; set; }
         [ForeignKey("ProductId")]
-        public int ProductId { get; set; }
+        public int ProductId {  get; set; }
         public string? ConsumerDisputed { get; set; }
-        public string? CompanyResponse { get; set; }
+        public string?  CompanyResponse { get; set; }
         [ForeignKey("StateId")]
         public int StateId { get; set; }
         public string? Submittedvia { get; set; }
@@ -33,14 +33,14 @@ namespace Complaints.Models
         public DateTime DateSentToCompany { get; set; }
         public string? ComplaintWhatHappened { get; set; }
         public string? Tags { get; set; }
-        public bool HasNarrative { get; set; }
+        public bool? HasNarrative { get; set; }
         public string? SubProduct { get; set; }
         public int ExComplaintId { get; set; }
         public Product? Product { get; set; }
-
+        
         public Company? Company { get; set; }
-
+        
         public State? State { get; set; }
-
+       
     }
 }
