@@ -216,25 +216,21 @@ namespace Complaints.Data
             IQueryable<ComplaintCountsModel> query;
             if (complaintId==0)
             {
-                query = (from complaint in _complaintsDbContext.Complaint
-                         join product in _complaintsDbContext.Product on complaint.ProductId equals product.ProductId
-                         join company in _complaintsDbContext.Company on product.CompanyId equals company.CompanyId
-                         where
-                           (
-                               (searchParams == null || searchParams.Trim() == "") || // Check if searchParams is null or empty
-                               ((complaint.Product.ProductName ?? "").Contains(searchParams.Trim()) ||
-                                (complaint.Company.CompanyName ?? "").Contains(searchParams.Trim())
-                               )
-                           )
-                         group new { product, company } by new { product.ProductId, product.CompanyId } into grouped
-                         select new ComplaintCountsModel
-                         {
-                             ProductId = grouped.Key.ProductId,
-                             CompanyId = grouped.Key.CompanyId,
-                             ProductName = grouped.Max(item => item.product.ProductName),
-                             CompanyName = grouped.Max(item => item.company.CompanyName),
-                             NoOfComplaints = grouped.Count(),
-                         });
+                 query = (from complaint in _complaintsDbContext.Complaint
+                             join product in _complaintsDbContext.Product on complaint.ProductId equals product.ProductId
+                             join company in _complaintsDbContext.Company on product.CompanyId equals company.CompanyId
+                             where (product.ProductName != null && product.ProductName.StartsWith(searchParams??""))
+                                   || (company.CompanyName != null && company.CompanyName.StartsWith(searchParams?? ""))
+                             group new { product, company } by new { product.ProductId, product.CompanyId } into grouped
+                             select new ComplaintCountsModel
+                             {
+                                 ProductId = grouped.Key.ProductId,
+                                 CompanyId = grouped.Key.CompanyId,
+                                 ProductName = grouped.Max(item => item.product.ProductName),
+                                 CompanyName = grouped.Max(item => item.company.CompanyName),
+                                 NoOfComplaints = grouped.Count(),
+                             });
+
             }
             else
             {
@@ -420,10 +416,10 @@ namespace Complaints.Data
                          //where P.ProductName == (product ?? "") && cc.CompanyName == (company ?? "")
                          where
                          (
-                          P.ProductName == (product ?? "") && cc.CompanyName == (company ?? "") &&
+                            P.ProductName == (product ?? "") && cc.CompanyName == (company ?? "") &&
                             string.IsNullOrEmpty(searchParam) &&
-                            (c.Product.ProductName ?? "").Contains(searchParam ?? "".Trim()) ||
-                            (c.Company.CompanyName ?? "").Contains(searchParam ?? "".Trim()) &&
+                            (P.ProductName ?? "").Contains(searchParam ?? "".Trim()) ||
+                            (cc.CompanyName ?? "").Contains(searchParam ?? "".Trim()) &&
                             !complaintId.HasValue || c.ComplaintId == Convert.ToInt64(complaintId)
                          )
                          select new ComplaintsInfo
