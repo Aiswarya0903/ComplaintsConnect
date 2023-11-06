@@ -153,7 +153,7 @@ namespace Complaints.Data
                 };
                 _complaintsDbContext.Add(complaints);
                 _complaintsDbContext.SaveChanges();
-                message = "Compalint Inserted Successfully.";
+                message = "Complaint Inserted Successfully?complaintsId="+complaints.ComplaintId.ToString();
             }
             else
             {
@@ -183,7 +183,7 @@ namespace Complaints.Data
 
                     _complaintsDbContext.Update(query);
                     _complaintsDbContext.SaveChanges();
-                    message = "Compalint Update Successfully.";
+                    message = "Complaint Update Successfully.";
                 }
 
 
@@ -202,7 +202,7 @@ namespace Complaints.Data
 
             if (int.TryParse(searchParams, out number))
             {
-                searchParams = "12345";
+                searchParams = "";
                 complaintId = number;
             }
             else
@@ -214,12 +214,18 @@ namespace Complaints.Data
 
             //Sarath
             IQueryable<ComplaintCountsModel> query;
-            if (string.IsNullOrEmpty(searchParams))
+            if (complaintId==0)
             {
                 query = (from complaint in _complaintsDbContext.Complaint
                          join product in _complaintsDbContext.Product on complaint.ProductId equals product.ProductId
                          join company in _complaintsDbContext.Company on product.CompanyId equals company.CompanyId
-                         //where product.ProductName.Contains(searchParams) || company.CompanyName.Contains(searchParams) // Add your search filter here
+                         where
+                           (
+                               (searchParams == null || searchParams.Trim() == "") || // Check if searchParams is null or empty
+                               ((complaint.Product.ProductName ?? "").Contains(searchParams.Trim()) ||
+                                (complaint.Company.CompanyName ?? "").Contains(searchParams.Trim())
+                               )
+                           )
                          group new { product, company } by new { product.ProductId, product.CompanyId } into grouped
                          select new ComplaintCountsModel
                          {
@@ -237,9 +243,9 @@ namespace Complaints.Data
                          join company in _complaintsDbContext.Company on product.CompanyId equals company.CompanyId
                          where
                          (
-                            string.IsNullOrEmpty(searchParams) ||
-                            (complaint.Product.ProductName ?? "").Contains(searchParams.Trim()) ||
-                            (complaint.Company.CompanyName ?? "").Contains(searchParams.Trim()) ||
+                            //string.IsNullOrEmpty(searchParams) ||
+                            //(complaint.Product.ProductName ?? "").Contains(searchParams.Trim()) ||
+                            //(complaint.Company.CompanyName ?? "").Contains(searchParams.Trim()) ||
                             !complaintId.HasValue || complaint.ComplaintId == Convert.ToInt64(complaintId)
                          )
                          group new { product, company } by new { product.ProductId, product.CompanyId } into grouped
@@ -265,6 +271,8 @@ namespace Complaints.Data
             ComplaintModelData.TotalPages = (int)Math.Ceiling((double)totalcount / pageSize);
             ComplaintModelData.ComplaintModelsData = recodlist;
             return ComplaintModelData;
+
+
             //var ComplaintModelData = new ComplaintModelData();
 
             //int pageSize = 10; // Number of records per page

@@ -252,6 +252,38 @@ body
     margin-top: 16px;
     font-weight: 600;
 }
+.technicalDescription 
+{
+    font-size: 14px;
+    padding: 8px 12px;
+}
+/*ComplaintId Model Popup css*/
+.copy-text 
+{
+    margin-top:16px;
+    background-color: #f4f4f4;
+    padding: 8px;
+    border-radius: 6px;
+    float: left;
+    border: 1px dashed #ccc;
+}
+.copyBtn 
+{
+    border: 0px;
+    background-color: transparent;
+}
+.copyBtn img
+{
+    width:22px;
+}
+.insertmsg,
+.insertmsg:focus-visible
+{
+    border: 0px;
+    background-color: transparent;
+    outline:none;
+}
+/*End*/
 /*About Team Css Ends Here*/
 /*Footer Css Starts Here*/
 .commonFooter {
