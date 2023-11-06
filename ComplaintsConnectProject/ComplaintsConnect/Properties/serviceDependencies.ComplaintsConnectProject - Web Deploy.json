@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Web/sites/ComplaintsConnectProject/providers/Microsoft.ServiceLinker/linkers/ConnectionStringsComplaintsDb_E8B1BA0E89",
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/complaintsdb/databases/ComplaintsDB",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:ComplaintsDb",
+      "dynamicId": null
+    }
+  }
+}
