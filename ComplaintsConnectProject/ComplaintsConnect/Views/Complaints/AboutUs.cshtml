@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "AboutUs";
 }
 
@@ -218,10 +217,565 @@
             </div>
         </section>
         <!-- About Us Section Ends Here -->
+        <!-- ER Diagram Section Starts Here -->
+        <section class="erDiagram commonSectionSpacing">
+            <div class="container-fluid">
+                <h4 class="commonSectionTitle borderTitle">Data Model</h4>
+                <div class="row">
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="erFlow text-center">
+                            <img src="~/img/aboutus/ComplaintConnectER.png" alt="Complaint Connect - ER Diagram"
+                                 class="commonImage" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ER Diagram Section Ends Here -->
+        <!-- API Document -->
+        <section class="apiDocument commonSectionSpacing">
+            <div class="container-fluid">
+                <h4 class="commonSectionTitle borderTitle">API Details</h4>
+                <div class="row">
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <ol class="commonUl" style="word-break: break-all;">
+                            <li>
+                                <h6>Description</h6>
+                                <p>The Consumer Complaint Data is a collection of complaints about consumer financial products and services that we sent to companies for response. Complaints are published after the company responds, confirming a commercial relationship with the consumer, or after 15 days, whichever comes first. Complaints referred to other regulators, such as complaints about depository institutions with less than $10 billion in assets, are not published in the Consumer Complaint Database. The database generally updates daily. </p>
+                                <p>
+                                    <span class="">URL:  <a href="https://catalog.data.gov/dataset/consumer-complaint-database">https://catalog.data.gov/dataset/consumer-complaint-database</a> </span>
+                                </p>
+
+                            </li>
+
+                            <li>
+                                <h6>Introduction</h6>
+                                <p>These endpoints provide access to consumer complaints</p>
+                            </li>
+
+                            <li>
+                                <h6>Endpoints</h6>
+                                <ol>
+                                    <li>
+                                        <h6> Get the Consumer Complaints Data</h6>
+                                        <p>
+                                            <span class="">URL: <a href="https://www.consumerfinance.gov/data-research/consumer-complaints/search/api/v1/">https://www.consumerfinance.gov/data-research/consumer-complaints/search/api/v1/</a> </span>
+
+                                        </p>
+                                        <h6>HTTP Method: GET,</h6>
+
+                                        <p>
+                                            <span><b>Payload</b></span>
+                                            <span>Query Params (optional)</span>
+                                        </p>
+                                        <p>
+                                            <span><b>size :</b></span>
+                                            <span>5</span>
+                                        </p>
+                                        <p>
+                                            <span><b>company_received_min:</b></span>
+                                            <span>2023-10-10</span>
+                                        </p>
+                                        <p>
+                                            <span><b>company_received_max:</b></span>
+                                            <span>2022-10-10</span>
+                                        </p>
+                                        <p><b>Response</b></p>
+                                        <pre>        {
+            "took": 155,
+            "timed_out": false,
+            "_shards": {
+                "total": 5,
+                "successful": 5,
+                "skipped": 0,
+                "failed": 0
+            },
+            "hits": {
+                "total": {
+                    "value": 0,
+                    "relation": "eq"
+                },
+                "max_score": null,
+                "hits": []
+            },
+            "aggregations": {
+                "has_narrative": {
+                    "doc_count": 0,
+                    "has_narrative": {
+                        "doc_count_error_upper_bound": 0,
+                        "sum_other_doc_count": 0,
+                        "buckets": []
+                    }
+                },
+                "product": {
+                    "doc_count": 0,
+                    "product": {
+                        "doc_count_error_upper_bound": 0,
+                        "sum_other_doc_count": 0,
+                        "buckets": []
+                    }
+                },
+                "issue": {
+                    "doc_count": 0,
+                    "issue": {
+                        "doc_count_error_upper_bound": 0,
+                        "sum_other_doc_count": 0,
+                        "buckets": []
+                    }
+                },
+                "timely": {
+                    "doc_count": 0,
+                    "timely": {
+                        "doc_count_error_upper_bound": 0,
+                        "sum_other_doc_count": 0,
+                        "buckets": []
+                    }
+                },
+                "consumer_consent_provided": {
+                    "doc_count": 0,
+                    "consumer_consent_provided": {
+                        "doc_count_error_upper_bound": 0,
+                        "sum_other_doc_count": 0,
+                        "buckets": []
+                    }
+                },
+                "company_response": {
+                    "doc_count": 0,
+                    "company_response": {
+                        "doc_count_error_upper_bound": 0,
+                        "sum_other_doc_count": 0,
+                        "buckets": []
+                    }
+                },
+                "submitted_via": {
+                    "doc_count": 0,
+                    "submitted_via": {
+                        "doc_count_error_upper_bound": 0,
+                        "sum_other_doc_count": 0,
+                        "buckets": []
+                    }
+                },
+                "state": {
+                    "doc_count": 0,
+                    "state": {
+                        "doc_count_error_upper_bound": 0,
+                        "sum_other_doc_count": 0,
+                        "buckets": []
+                    }
+                },
+                "consumer_disputed": {
+                    "doc_count": 0,
+                    "consumer_disputed": {
+                        "doc_count_error_upper_bound": 0,
+                        "sum_other_doc_count": 0,
+                        "buckets": []
+                    }
+                },
+                "company_public_response": {
+                    "doc_count": 0,
+                    "company_public_response": {
+                        "doc_count_error_upper_bound": 0,
+                        "sum_other_doc_count": 0,
+                        "buckets": []
+                    }
+                },
+                "tags": {
+                    "doc_count": 0,
+                    "tags": {
+                        "doc_count_error_upper_bound": 0,
+                        "sum_other_doc_count": 0,
+                        "buckets": []
+                    }
+                }
+            },
+            "_meta": {
+                "license": "CC0",
+                "last_updated": "2023-10-27T12:00:00-05:00",
+                "last_indexed": "2023-10-28T12:00:00-05:00",
+                "total_record_count": 4227387,
+                "is_data_stale": false,
+                "has_data_issue": false,
+                "break_points": {}
+            }
+        }
+
+                                        </pre>
+                                        <h6>Description:</h6>
+                                        <p>Get Complaints Consumer, this api get the consumer complaints </p>
+                                    </li>
+                                    <li>
+                                        <h6> Get all Complaints Counts by company and Product for List of complaints</h6>
+                                        <p>
+                                            <span class="">URL: </span>
+                                            <span>/ComplaintsController/GetComplaintsData</span>
+                                        </p>
+                                        <p>
+                                            <span class="">HTTP Method:</span>
+                                            <span>Get</span>
+                                        </p>
+                                        <h6>Response: </h6>
+                                        <pre>        HTTP/1.1 200 OK
+        Content-Type: application/json
+
+        {
+        "status": "success",
+        "message": "Complaints retrived successfully",
+        "data": [{
+            "companyname" : "AR VR Company",
+            "product" : "Bank account or service",
+            "noofcomplaints" :"1"
+        },
+        {
+            "companyname" : "BANCO POPULAR DE PUERTO RICO",
+            "product" : "Bank account or service",
+            "noofcomplaints" :"3"
+        }, 
+        {
+            "companyname" : "BANK OF AMERICA, NATIONAL ASSOCIATION",
+            "product" : "Bank account or service",
+            "noofcomplaints" :"28"
+        },
+        {
+            "companyname" : "BANK OF THE WEST",
+            "product" : "Bank account or service",
+            "noofcomplaints" : "6"
+        },                                             
+        ]
+        }
+                                        </pre>
+                                        <p>
+                                            <span><b>Description:</b></span>
+                                            <span>To get the Consumer Complaints by company and product. </span>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <h6> Raise a Complaint Request</h6>
+                                        <p>
+                                            <span class="">URL: </span>
+                                            <span>/ComplaintsController/InsertComplaintDetailsAddEdit</span>
+                                        </p>
+                                        <p>
+                                            <span class="">Payload:</span>
+                                            <span>Json Body</span>
+                                        </p>
+                                        <pre>        {
+            "Product": "Bank account or service",
+            "ComplaintWhatHappened": "",
+            "DateSentToCompany": "2023-10-29T09:44",
+            "Issue": "Deposits and withdrawals",
+            "SubProduct": "Checking account",
+            "ZipCode": "94605",
+            "Tags": "Older American",
+            "HasNarrative": true,
+            "Timely": "Yes",
+            "ConsumerConsentProvided": "N/A",
+            "CompanyResponse": "N/A",
+            "SubmittedVia": "Phone",
+            "Company": "WELLS FARGO &amp; COMPANY",
+            "Complaint_Id": 0,
+            "DateReceived": "2023-10-29T09:45",
+            "State": "CA",
+            "ConsumerDisputed": "No",
+            "CompanyPublicResponse": "",
+            "SubIssue": "Used obscene/profane/abusive language"
+        }                                            
+                                        </pre>
+                                        <p>
+                                            <span><b>HTTP Method:</b></span>
+                                            <span>Post</span>
+                                        </p>
+                                        <p>
+                                            <span><b>Response:</b></span>
+                                        </p>
+                                        <pre>        HTTP/1.1 200 OK
+        Content-Type: application/json
+
+        {
+        "status": "success",
+        "message": "Complaint created successfully"
+        }
+                                        </pre>
+                                        <p>
+                                            <span><b>Description:</b></span>
+                                            <span>To Insert the raise complaints </span>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <h6> Get a complaint details based on Product and Company for Details List</h6>
+                                        <p>
+                                            <span class="">URL: </span>
+                                            <span>/ComplaintsController/GetDetailsByProductCompany</span>
+                                        </p>
+                                        <p>
+                                            <span class="">HTTP Method:</span>
+                                            <span>Get</span>
+                                        </p>
+                                        <p>
+                                            <span><b>Payload :</b></span>
+                                            <span> Query Params</span>
+                                        </p>
+                                        <pre>        "Product": "Bank account or service",
+        "Company": "AR VR Company",                                           
+                                        </pre>
+                                        <p><b>Response:</b></p>
+                                        <pre>        HTTP/1.1 200 OK
+        Content-Type: application/json
+
+        {
+        "status": "success",
+        "message": "Complaints Data retrieved successfully",
+            "data": [
+                    {
+                "Product": "Bank account or service",
+                "ComplaintWhatHappened": "Happend",
+                "DateSentToCompany": "07/08/2014",
+                "Issue": "Account opening, closing, or management",
+                "SubProduct": "(CD) Certificate of deposit",
+                "ZipCode": "00603",
+                "Tags": "Loan",
+                "HasNarrative": true,
+                "ComplaintId": "97144",
+                "Timely": "Yes",
+                "ConsumerConsentProvided": "N/A",
+                "CompanyResponse": "N/A",
+                "SubmittedVia": "Web",
+                "Company": "AR VR Company",
+                "DateReceived": "07/09/2013",
+                "State": "PR",
+                "ConsumerDisputed": "No",
+                "CompanyPublicResponse": "Public",
+                "SubIssue": "Response",
+
+            },
+            {
+                "Product": "Bank account or service",
+                "ComplaintWhatHappened": "Happend",
+                "DateSentToCompany": "05/08/2005",
+                "Issue": "Account opening, closing, or management",
+                "SubProduct": "(CD) Certificate of deposit",
+                "ZipCode": "00603",
+                "Tags": "Loan",
+                "HasNarrative": true,
+                "ComplaintId": "97144",
+                "Timely": "Yes",
+                "ConsumerConsentProvided": "N/A",
+                "CompanyResponse": "N/A",
+                "SubmittedVia": "Web",
+                "Company": "AR VR Company",
+                "DateReceived": "02/12/2004",
+                "State": "PR",
+                "ConsumerDisputed": "No",
+                "CompanyPublicResponse": "Public",
+                "SubIssue": "Response",
+
+            }
+        ]
+
+        }
+                                        </pre>
+                                        <p>
+                                            <span><b>Description :</b></span>
+                                            <span>In the details page view the list of products, company status, issue, complaint registered  </span>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <h6> Get a complaint details by Complaint id for View</h6>
+                                        <p>
+                                            <span class="">URL: </span>
+                                            <span>/ComplaintsController/GetDetailsById</span>
+                                        </p>
+                                        <p>
+                                            <span class="">HTTP Method:</span>
+                                            <span>Get</span>
+                                        </p>
+                                        <p>
+                                            <span><b>Payload:</b></span>
+                                            <span>Query Params</span>
+                                        </p>
+                                        <pre>        "Complaint_Id": 999589,
+                                        </pre>
+                                        <p><b>Response:</b></p>
+                                        <pre>        HTTP/1.1 200 OK
+        Content-Type: application/json
+
+        {
+        "status": "success",
+        "message": "Complaint details retrieved successfully",
+        "data": {
+                    "Product": "Bank account or service",
+                    "ComplaintWhatHappened": "Happend",
+                    "DateSentToCompany": "12/02/2016",
+                    "Issue": "Account opening, closing, or management",
+                    "SubProduct": "(CD) Certificate of deposit",
+                    "ZipCode": "00603",
+                    "Tags": "Loan",
+                    "HasNarrative": true,
+                    "ComplaintId": "999589",
+                    "Timely": "Yes",
+                    "ConsumerConsentProvided": "N/A",
+                    "CompanyResponse": "N/A",
+                    "SubmittedVia": "Web",
+                    "Company": "BANCO POPULAR DE PUERTO RICO",
+                    "DateReceived": “12/02/2016”,
+                    "State": "PR",
+                    "ConsumerDisputed": "No",
+                    "CompanyPublicResponse": "Public",
+                    "SubIssue": "Response",
+
+                }
+        }
+                                        </pre>
+                                        <p>
+                                            <span>Description:</span>
+                                            <span> To view the complaint details we have to send the complaint id, for edit/update the complaint data.</span>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <h6> Get a complaint details by Complaint id for Edit</h6>
+                                        <p>
+                                            <span class="">URL: </span>
+                                            <span>/ComplaintsController/InsertComplaintDetailsAddEdit</span>
+                                        </p>
+                                        <p>
+                                            <span class="">HTTP Method:</span>
+                                            <span>Post</span>
+                                        </p>
+                                        <p>
+                                            <span><b>Payload:</b></span>
+                                            <span>Body</span>
+                                        </p>
+                                        <pre>        {
+            "Product": "Bank account or service",
+            "ComplaintWhatHappened": "",
+            "DateSentToCompany": "2023-10-29T09:44",
+            "Issue": "Deposits and withdrawals",
+            "SubProduct": "Checking account",
+            "ZipCode": "94605",
+            "Tags": "Older American",
+            "HasNarrative": true,
+            "Timely": "Yes",
+            "ConsumerConsentProvided": "N/A",
+            "CompanyResponse": "N/A",
+            "SubmittedVia": "Phone",
+            "Company": "WELLS FARGO &amp; COMPANY",
+            "Complaint_Id": 87845,
+            "DateReceived": "2023-10-29T09:45",
+            "State": "CA",
+            "ConsumerDisputed": "No",
+            "CompanyPublicResponse": "",
+            "SubIssue": "Used obscene/profane/abusive language"
+        }                                            
+                                        </pre>
+                                        <p>
+                                            <span><b>Response:</b></span>
+                                        </p><pre>        HTTP/1.1 200 OK
+        Content-Type: application/json
+
+        {
+        "status": "success",
+        "message": "Complaint Updated successfully",
+        }
+                                            </pre>
+                                        <p></p>
+                                        <p>
+                                            <span><b>Description :</b></span>
+                                            <span>
+                                                Here we have to edit the complaint details based on id, then it will update the
+                                                Fields.
+                                            </span>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <h6> Get a complaint details by Complaint_id for Delete</h6>
+                                        <p>
+                                            <span class="">URL: </span>
+                                            <span>/ComplaintsController/DeleteComplaintById</span>
+                                        </p>
+                                        <p>
+                                            <span class="">HTTP Method:</span>
+                                            <span>Put</span>
+                                        </p>
+                                        <p>
+                                            <span><b>Payload:</b></span>
+                                            <span>Query Params</span>
+                                        </p>
+                                        <pre>        "Complaint_Id": 999589
+        Response:
+        HTTP/1.1 200 OK
+        Content-Type: application/json
+
+        {
+        "status": "success",
+        "message": "Complaint Delete successfully",
+        }                                          
+                                        </pre>
+                                        <p>
+                                            <span><b>Description :</b></span>
+                                            <span>
+                                                Delete the complaint by id.
+                                            </span>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <h6> Get a complaint details by Company and Product for graph</h6>
+                                        <p>
+                                            <span class="">URL: </span>
+                                            <span>/ComplaintsController/GetGraphData</span>
+                                        </p>
+                                        <p>
+                                            <span class="">HTTP Method:</span>
+                                            <span>Get</span>
+                                        </p>
+                                        <p>
+                                            <span><b>Payload:</b></span>
+                                            <span>Query Params</span>
+                                        </p>
+                                        <pre>		"Company": "U.S. BANCORP",  
+        "Product": "Bank account or service",
+
+                                        </pre>
+                                        <p>
+                                            <span><b>Response:</b></span>
+                                        </p>
+                                        <pre>        HTTP/1.1 200 OK
+        Content-Type: application/json
+        {
+        "status": "success",
+        "message": "Resource created successfully",
+            "data": [
+            {
+                    "Product": "Bank account or service",
+                    "Company": "U.S. BANCORP",
+                    "Year": 2012,
+                    "Complaints": 10
+            },
+            {
+                    "Product": "Bank account or service",
+                    "Company": "U.S. BANCORP",
+                    "Year": 2014,
+                    "Complaints": 34
+            }
+        ]
+        }
+                                        </pre>
+                                        <p>
+                                            <span><b>Description:</b></span>
+                                            <span>The graph show the number of complaints based on the year wise</span>
+                                        </p>
+                                    </li>
+                                </ol>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- API Document -->
         <!-- Technical Details Section Css Starts Here -->
         <section class="technicalDetails commonSectionSpacing">
             <div class="container-fluid">
                 <h4 class="commonSectionTitle borderTitle">Technical Details</h4>
+                <p class="technicalDescription">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
                 <div class="row">
                     <div class="col-12 col-md-6 col-lg-3">
                         <div class="card">
@@ -262,26 +816,11 @@
                                 <div class="technicalTitle">Jquery </div>
                             </div>
                         </div>
-                    </div>                    
-                </div>
-            </div>
-        </section>
-        <!-- Technical Details Section Css Ends Here -->
-        <!-- ER Diagram Section Starts Here -->
-        <section class="erDiagram commonSectionSpacing">
-            <div class="container-fluid">
-                <h4 class="commonSectionTitle borderTitle">Data Model</h4>
-                <div class="row">
-                    <div class="col-12 col-md-12 col-lg-12">
-                        <div class="erFlow text-center">
-                            <img src="~/img/aboutus/ComplaintConnectER.png" alt="Complaint Connect - ER Diagram"
-                                 class="commonImage" />
-                        </div>
                     </div>
                 </div>
             </div>
         </section>
-        <!-- ER Diagram Section Ends Here -->
+        <!-- Technical Details Section Css Ends Here -->
         <!-- GitHub URL Section Starts Here -->
         <section class="githubLink commonSectionSpacing">
             <div class="container-fluid">
