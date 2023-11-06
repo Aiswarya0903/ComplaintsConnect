@@ -1,0 +1,457 @@
+﻿@using Complaints.Models.Models;
+@model ComplaintsInfoData
+@{
+    int pageSize = 10;
+    int currentPage = Model.CurrentPage; // Replace with your actual current page
+    int totalPages = Model.TotalPages;
+    ViewData["Title"] = "ComplaintDetails";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Bootstrap Css -->
+    <link rel="stylesheet" type="text/css" href="~/css/bootstrap.min.css" />
+    <!-- Custom Css -->
+    <link rel="stylesheet" type="text/css" href="~/css/main.css" />
+    <title>Assignment - 3</title>
+</head>
+
+<body>
+    <!-- Navigation Starts Here -->
+    <div class="commonNavbar">
+        <nav class="navbar navbar-fixed-top navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand commonLogo" href="/Complaints/Home">
+                    <img src="~/img/usf-logo-png-2.png" class="commonImage" alt="Header Logo" />
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a href="/Complaints/Home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/Complaints/AboutUs">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/Complaints/Complaints">Complaints</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- Navigation Ends Here -->
+    <!-- Toaster message div section start -->
+    <div id="toastContainer" class="commonToaster toasterDeleted">
+    </div>
+    <!-- Toaster message div section End -->
+    <!-- Body Sectiion starts Here -->
+    <div class="mainPage my-5">
+
+        <!-- Complaints Section Starts Here -->
+        <section class="complaintsDetails">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <!-- Graph Section Starts Here -->
+                        <div class="graphPart">
+                            <div class="card commonCard">
+                                <div class="card-body">
+                                    <div id="lineChartContainer">
+                                        <canvas id="lineChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Graph Section Ends Here-->
+                        <!-- Complaints Details Tables Starts Here -->
+                        <div class="commonComplaintTable commonSectionSpacing">
+                            <div class="commonCardHeader mb-2">
+                                <div class="row">
+                                    <div class="col-12 col-md-6 col-lg-6">
+                                        <h4>Complaints Info Table</h4>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 text-end">
+                                        <button onclick="actionType('DSave')" type="button" class="btn-primary headerResponsiveBtn">
+                                            <a>Raise a complaint</a>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="tableSearch">
+                                        <div class="row">
+                                            <div class="col-12 col-md-8 col-lg-8">
+                                            </div>
+                                            <div class="col-12 col-md-4 col-lg-4 p-0">
+                                                <div class="form-group has-search">
+                                                    <button class="btn" onclick="SearchParams()">
+                                                        <img src="~/img/searchInput.png" alt="search Input" />
+                                                    </button>
+                                                    <input type="text" class="form-control" id="searchparamsId" placeholder="Company Id, Company Name,Product Name">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table id="commonDataTable" class="table commonDataTable" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Complaint Id</th>
+                                                <th>Product</th>
+                                                <th>Company Name</th>
+                                                <th>Issue</th>
+                                                <th>Complaint Status</th>
+                                                <th>Complaint Registered</th>
+                                                <th class="actionColumn">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.ComplaintInfoData.ToList())
+                                            {
+                                                <tr>
+                                                    <td data-label="Complaint Id">@item.ComplaintId</td>
+                                                    <td data-label="Product">@item.ProductName</td>
+                                                    <td data-label="Company Name">@item.CompanyName</td>
+                                                    <td data-label="Issue">@item.Issue</td>
+                                                    <td data-label="Complaint Status">@item.CompanyResponse</td>
+                                                    <td data-label="Complaint Registered">@item.DateReceived</td>
+                                                    <td data-label="Action" class="actionColumn">
+                                                        <button type="button" class="btn" onclick="viewEditDetails('@item.ComplaintId','View')">
+                                                            <a>
+                                                                <img src="~/img/eye.png" />
+                                                            </a>
+                                                        </button>
+                                                        <button type="button" class="btn" onclick="viewEditDetails('@item.ComplaintId','Edit')">
+                                                            <a>
+                                                                <img src="~/img/edit.png" />
+                                                            </a>
+                                                        </button>
+                                                        <button type="button" class="btn grayBtn" onclick="DeleteComplaint('@item.ComplaintId')" data-bs-toggle="modal" data-bs-target="#deleteRecord">
+                                                            <img src="~/img/delete.png" />
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            }
+                                            
+                                            
+                                        </tbody>
+                                    </table>
+                                    <div class="tableFooter">
+                                        <div class="row">
+
+                                            <div class="col-12 col-md-10 col-lg-10 p-0">
+                                                <!-- Bootstrap pagination -->
+                                                <nav aria-label="Page navigation example">
+                                                    <ul class="pagination justify-content-end">
+                                                        <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                                                            <a class="page-link" onclick="paginationsDetails('1')" >Previous</a>
+                                                        </li>
+
+                                                        @for (int i = 1; i <= totalPages; i++)
+                                                        {
+                                                            <li class="page-item @(i == currentPage ? "active" : "")">
+                                                                <a class="page-link" onclick="paginationsDetails('@i')">@i</a>
+                                                            </li>
+
+                                                        }
+
+                                                        <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                                                            <a class="page-link" onclick="paginationsDetails('@totalPages')">Next</a>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Complaints Details Tables Ends Here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Complaints Section Ends Here -->
+        <!-- Delete Modal Popup Starts Here -->
+        <div class="modal fade" id="deleteRecord" tabindex="-1" aria-labelledby="deleteRecord" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Record</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure want delete the record?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" id="deleteComplaints" onclick="DeleteComplaintById()" class="btn btn-primary scrollTopPage">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Delete Modal Popup Ends Here -->
+
+    </div>
+    <!-- Body Sectiion Ends Here -->
+    <!-- Footer Section Starts Here -->
+    <footer class="commonFooter">
+        <div class="footerTop">
+            <div class="row">
+                <div class="col-12 col-md-4 col-lg-6">
+                    <div class="commonLogo">
+                        <a href="index.html">
+                            <img src="~/img/usf-logo-png-2.png" class="commonImage" alt="Footer Logo" />
+                        </a>
+                    </div>
+                </div>
+                <div class="col-12 col-md-8 col-lg-6">
+                    <ul class="p-0 m-0 floatR footerUL">
+                        <li class="foterListItem">
+                            <a href="aboutUs.html">About Us</a>
+                        </li>
+                        <li class="foterListItem">
+                            <a href="#">Privacy Policy</a>
+                        </li>
+                        <li class="foterListItem">
+                            <a href="#">FAQ's</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footerBottom">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12">
+                    <p class="text-center copyRight">&copy; 2023 Complaint Connect All Rights Reserved</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section Ends Here -->
+    <!--JS links-->
+    <!--Jquey-->
+    <script type="text/javascript" src="~/js/jqery.min.js"></script>
+    <!-- Charts Js -->
+    <script type="text/javascript" src="~/js/chart.js"></script>
+
+    <!-- Bootstrap.min Js-->
+    <script type="text/javascript" src="~/js/bootstrap.min.js"></script>
+    <!-- Custome Js-->
+    <script type="text/javascript" src="~/js/main.js"></script>
+    <script type="text/javascript">
+
+    </script>
+</body>
+
+</html>
+<script>
+
+    $('.scrollTopPage').click(function () {
+        $('html, body').animate({ scrollTop: 0 }, 'slow');
+    });
+
+    var complaintData = [];
+    // Sample data, replace this with your actual data
+    var urlParams = window.location.href;
+    // Create a URLSearchParams object from the URL
+    var queryString = urlParams.split('?')[1];
+
+    // Parse the query string into key-value pairs
+    var params = {};
+    queryString.split('&').forEach(function (param) {
+        var keyValue = param.split('=');
+        params[keyValue[0]] = decodeURIComponent(keyValue[1]);
+    });
+
+    // Get the value of the "product" query parameter
+    var product = params.product;
+
+    // Get the value of the "company" query parameter
+    var company = params.company;
+
+    $.ajax({
+        type: 'Get',
+        url: '@Url.Action("GetGraphData", "Complaints")',
+        async: true,
+        data: { productName: product, companyName: company },
+        success: function (response) {
+            complaintData = response;
+            // Get the current year
+            var currentYear = new Date().getFullYear();
+
+            // Generate an array of years from 2005 to the current year
+            var years = Array.from({ length: currentYear - 2005 + 1 }, (_, index) => 2005 + index);
+
+            // Generate data for the chart based on years and complaints
+            var data = {
+                labels: years,
+                datasets: [{
+                    label: 'Complaints',
+                    data: years.map(year => {
+                        var dataPoint = complaintData.find(item => item.year === year);
+                        return dataPoint ? dataPoint.noOfComplaints : 0;
+                    }),
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2,
+                    fill: false
+                }]
+            };
+
+            // Get the canvas element
+            var ctx = document.getElementById('lineChart').getContext('2d');
+
+            // Create the line chart
+            var lineChart = new Chart(ctx, {
+                type: 'line',
+                data: data,
+                options: {
+                    scales: {
+                        x: [{
+                            type: 'linear',
+                            position: 'bottom',
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Year'
+                            }
+                        }],
+                        y: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Complaints12'
+                            }
+                        }]
+                    }
+                }
+            });
+        },
+        failure: function (response) {
+
+            showToast("Failed to Delete, Please try again later.");
+        },
+        error: function (error) {
+            // Handle any errors that occur during the request
+            console.log(error);
+        }
+    });
+    
+
+    
+</script>
+<script>
+    var productName = "";
+    var companyName = "";
+    $(document).ready(function () {
+        // Sample data, replace this with your actual data
+        var urlParams = window.location.href;
+        // Create a URLSearchParams object from the URL
+        var queryString = urlParams.split('?')[1];
+
+        // Parse the query string into key-value pairs
+        var params = {};
+        queryString.split('&').forEach(function (param) {
+            var keyValue = param.split('=');
+            params[keyValue[0]] = decodeURIComponent(keyValue[1]);
+        });
+        // Get the value of the "product" query parameter
+        var product = params.product;
+        productName = product;
+        // Get the value of the "company" query parameter
+        var company = params.company;
+        companyName = company;
+        // Get the value of the "searchParams" query parameter
+        var searchParam = params.searchParam;
+
+        $('#searchparamsId').val(searchParam);
+    });
+
+    $("#searchparamsId").on("keypress", function (event) {
+        // Check if the pressed key is "Enter" (key code 13)
+        if (event.which === 13) {
+            // Prevent the default form submission behavior
+            event.preventDefault();
+
+            // Trigger the form submission
+            SearchParams();
+        }
+    });
+    function paginationsDetails(currentPage) {
+        debugger;
+        window.location.href = '/Complaints/ComplaintDetails?product=' + productName + '&company=' + companyName + '&page=' + currentPage;
+    }
+
+    function SearchParams() {
+        var searchParams = $('#searchparamsId').val();
+        window.location.href = '/Complaints/ComplaintDetails?product='+productName+'&company='+companyName+'&searchParam=' + searchParams;
+
+
+    }
+    function viewEditDetails(complaintId, type) {
+        localStorage.setItem("action", type);
+        window.location.href = '/Complaints/CompalintsAddEdit?complaintId=' + complaintId + '&type=' + type + '&product=' + productName + '&company=' + companyName + '';
+    }
+    var complaintIdToDelete;
+    function DeleteComplaint(complaintId) {
+        complaintIdToDelete = complaintId;
+    }
+    function DeleteComplaintById() {
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("DeleteComplaintById", "Complaints")',
+            async: true,
+            data: { complaintId: complaintIdToDelete },
+            success: function (response) {
+
+                showToast("Deleted successfully");
+                // Navigate to another HTML page after a delay (e.g., 2 seconds)
+                setTimeout(function () {
+                    window.location.href = '/Complaints/ComplaintDetails?product=' + productName + '&company=' + companyName; 
+                }, 1000);
+            },
+            failure: function (response) {
+
+                showToast("Failed to Delete, Please try again later.");
+            },
+            error: function (error) {
+                // Handle any errors that occur during the request
+                console.log(error);
+            }
+        });
+    }
+
+    //raise a complaints fucntion
+    function actionType(type) {
+
+        //add the action type here based on that type of page will decided.
+        localStorage.setItem("action", type);
+        //navigation to complaint page.
+        window.location.href = '/Complaints/CompalintsAddEdit';
+    }
+    // Function to show a Bootstrap toast
+    function showToast(message) {
+        var toastContainer = document.getElementById('toastContainer');
+        var toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = '<div class="toast-header">Success</div><div class="toast-body">' + message + '</div>';
+        toastContainer.appendChild(toast);
+
+        var bsToast = new bootstrap.Toast(toast);
+        bsToast.show();
+
+    }
+
+    
+</script>
+

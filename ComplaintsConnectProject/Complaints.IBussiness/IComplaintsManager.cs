@@ -1,5 +1,4 @@
-﻿
-using Complaints.Models;
+﻿using Complaints.Models;
 using Complaints.Models.Models;
 using System;
 using System.Collections.Generic;
@@ -8,16 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Complaints.IData
+namespace Complaints.IBussiness
 {
-    public interface IComplaintsRepository
+    public interface IComplaintsManager
     {
         string InsertComplaintDetailsAddEdit(CompalintsDataModel modelObject);
-        List<ProductInfo> GetDistinctProductsList();
+        Task<LiveComplaintsModel> GetViewComplaintById(int complaintId);
         ComplaintsInfo GetComplaintById(int complaintId);
+        List<ProductInfo> GetDistinctProductsList();
         List<CompanyInfo> GetDistinctCompaniesListForProduct(string productName);
-        ComplaintModelData GetComplaintsData(int currentPage, string searchParams,int page);
-        ComplaintsInfoData GetDetailsByProductCompany(string product, string company, string searchParam, int page);
+        ComplaintModelData GetComplaintsData(int currentPage,string searchParams,int page);
+        ComplaintsInfoData GetDetailsByProductCompany(string product, string company, string searchParam,int page);
         string DeleteComplaintById(int complaintId);
         List<ComplaintsGraphData> GetComplaintsGraphData(string productName, string companyName);
     }
