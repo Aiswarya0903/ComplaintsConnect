@@ -24,8 +24,7 @@ namespace Complaints.Data
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseSqlServer(_Connstr);
-                //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                //optionsBuilder.UseSqlServer("Data Source=34.238.198.17;Initial Catalog=Fin_Gatway;User ID=halcyonapp;Password=nw21dbu$3r;  persist Security Info=true; Connect Timeout=120;");
+                
             }
         }
 
