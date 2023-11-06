@@ -153,7 +153,7 @@ namespace Complaints.Data
                 };
                 _complaintsDbContext.Add(complaints);
                 _complaintsDbContext.SaveChanges();
-                message = "Complaint Inserted Successfully?complaintsId="+complaints.ComplaintId.ToString();
+                message = "Compalint Inserted Successfully?complaintsId="+complaints.ComplaintId.ToString();
             }
             else
             {
@@ -183,7 +183,7 @@ namespace Complaints.Data
 
                     _complaintsDbContext.Update(query);
                     _complaintsDbContext.SaveChanges();
-                    message = "Complaint Update Successfully.";
+                    message = "Compalint Update Successfully.";
                 }
 
 
