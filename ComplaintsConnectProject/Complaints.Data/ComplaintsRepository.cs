@@ -447,6 +447,9 @@ namespace Complaints.Data
                          });
             // return query.ToList();
             //Sarath
+
+            _complaintsDbContext.Database.SetCommandTimeout(180);
+            _complaintsDbContext.Database.CloseConnection();
             var result = query.Skip((pageNumber - 1) * pageSize) // Skip records on previous pages
                             .Take(pageSize); // Take the current page of records
 
