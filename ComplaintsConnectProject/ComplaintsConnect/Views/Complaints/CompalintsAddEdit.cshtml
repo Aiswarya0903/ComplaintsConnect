@@ -68,6 +68,34 @@
         </div>
     </div>
     <!-- Delete Modal Popup Ends Here -->
+
+    <!-- Insert Modal Popup Starts Here -->
+    <div class="modal fade" id="insertmsg" tabindex="-1" aria-labelledby="insertmsg" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Success</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Complaint raised successfully and here is your complaint id.
+
+                    <div class="copy-text">
+                        <input class="text insertmsg" id="complaintIdMsg" type="text" value="">
+                        <button class="copy-button copyBtn"><img src="~/img/copy.png" /></button>
+                        <div class="copy-message" style="display:none">Copied!</div>
+                    </div>
+
+                                     
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnMessageId" onclick="btnOkMessage()" class="btn btn-primary">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Delete Modal Popup Ends Here -->
+
     <!-- Body Sectiion starts Here -->
     <div class="mainPage my-5">
 
@@ -916,11 +944,10 @@
                                 }, 1000);
                             }
                             else {
-                                showToast(data);
-                                // Navigate to another HTML page after a delay (e.g., 1 seconds)
-                                setTimeout(function () {
-                                    window.location.href = '/Complaints/Complaints'
-                                }, 1000);
+                                //showToast(data);
+                                $('#complaintIdMsg').val(data.split('=')[1]);
+                                $('#insertmsg').modal('show');
+
                             }
 
 
@@ -989,7 +1016,34 @@
                 bsToast.hide();
             }, 1000);
         }
+        function btnOkMessage(){
+            // Navigate to another HTML page after a delay (e.g., 1 seconds)
+            setTimeout(function () {
+                window.location.href = '/Complaints/Complaints'
+            }, 1000);
+        }
+        //ComplaintId Model Pop up Script
 
+        let copyText = document.querySelector(".copy-text");
+        let input = copyText.querySelector("input.text");
+        let copyButton = copyText.querySelector("button.copy-button");
+        let copyMessage = copyText.querySelector(".copy-message");
+
+        copyButton.addEventListener("click", function () {
+            input.select();
+            document.execCommand("copy");
+            copyText.classList.add("active");
+            copyMessage.style.display = "block"; // Show the message
+
+            // Use setTimeout to hide the message after a delay (e.g., 2 seconds)
+            setTimeout(function () {
+                copyText.classList.remove("active");
+                copyMessage.style.display = "none"; // Hide the message
+            }, 2000); // Adjust the time as needed (2 seconds in this example)
+        });
+
+
+        //End
 
 
     </script>
